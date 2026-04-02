@@ -1,0 +1,25 @@
+{
+  "lista": [
+    {
+      "texto": "Mis hijos crecieron felices en el jardín Jesús Maestro. Las maestras son increíbles, siempre pendientes de cada niño. No podría haber elegido mejor lugar para ellos.",
+      "nombre": "María González",
+      "rol": "Madre de alumna de 4 años",
+      "inicial": "M",
+      "color": "linear-gradient(135deg,#FF9B24,#FFD23F)"
+    },
+    {
+      "texto": "Lo que más valoro es la comunicación constante con las docentes. Siempre sé cómo va mi hijo, qué aprendió y cómo se portó. Es un jardín con mucho amor y profesionalismo.",
+      "nombre": "Carlos Ríos",
+      "rol": "Padre de alumno de 3 años",
+      "inicial": "C",
+      "color": "linear-gradient(135deg,#00BBAE,#00E5D4)"
+    },
+    {
+      "texto": "Mi hija llegó tímida al jardín y en pocos meses se transformó: canta, baila, hace amigos y llega emocionada cada mañana. Eso lo dice todo. Totalmente recomendado.",
+      "nombre": "Lucía Paredes",
+      "rol": "Madre de alumna de 5 años",
+      "inicial": "L",
+      "color": "linear-gradient(135deg,#A855F7,#C084FC)"
+    }
+  ]
+}

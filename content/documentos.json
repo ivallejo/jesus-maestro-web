@@ -1,0 +1,13 @@
+{
+  "lista": [
+    { "nombre": "Reglamento interno",       "url": "https://ieijesusmaestro.edu.pe/documento/1" },
+    { "nombre": "Resolución de apertura",   "url": "https://ieijesusmaestro.edu.pe/documento/3" },
+    { "nombre": "Proceso de matrícula",     "url": "https://ieijesusmaestro.edu.pe/documento/6" },
+    { "nombre": "Etapas de matrícula",      "url": "https://ieijesusmaestro.edu.pe/documento/8" },
+    { "nombre": "Calendario escolar",       "url": "https://ieijesusmaestro.edu.pe/documento/4" },
+    { "nombre": "Proyecto educativo",       "url": "https://ieijesusmaestro.edu.pe/documento/2" },
+    { "nombre": "Evaluación nivel inicial", "url": "https://ieijesusmaestro.edu.pe/documento/5" },
+    { "nombre": "Informe servicio educativo","url": "https://ieijesusmaestro.edu.pe/documento/7" },
+    { "nombre": "Jesús Maestro Informa",    "url": "https://ieijesusmaestro.edu.pe/documento/11" }
+  ]
+}

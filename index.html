@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IEI Jesús Maestro – Jardín de Infancia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Fredoka', sans-serif; color: #484848; background: #fff; overflow-x: hidden; font-size: 16px; line-height: 1.75; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --orange: #FF9B24;
+      --orange-light: #FFB257;
+      --teal: #00BBAE;
+      --teal-dark: #009E92;
+      --yellow: #FFD23F;
+      --purple: #A855F7;
+      --blue: #3B82F6;
+      --green: #22C55E;
+      --pink: #FF577B;
+      --cream: #F3F3F3;
+      --navy: #222222;
+      --gray: #484848;
+      --light-gray: #F0F0F0;
+      --border: #E8E8E8;
+      --white: #FFFFFF;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.10);
+      --radius: 20px;
+      --radius-lg: 32px;
+    }
+
+    /* ===== UTILITIES ===== */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-title { font-family: 'Fredoka', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; color: var(--navy); line-height: 1.2; }
+    .section-sub { font-size: 1.05rem; color: var(--gray); margin-top: 12px; max-width: 560px; line-height: 1.75; font-weight: 400; }
+    .badge { display: inline-block; background: rgba(0,187,174,0.12); color: var(--teal); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 6px 18px; border-radius: 50px; margin-bottom: 16px; border: 1px solid rgba(0,187,174,0.25); }
+    /* ===== BUTTONS – efecto círculo deslizante (estilo Kindedo) ===== */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 34px; border-radius: 50px; font-size: 1rem;
+      font-weight: 600; cursor: pointer; border: none;
+      position: relative; overflow: hidden; z-index: 1;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, color 0.5s ease-out;
+      font-family: 'Fredoka', sans-serif;
+    }
+    /* Círculo pseudo-elemento que se desliza al hacer hover */
+    .btn::before {
+      content: ''; position: absolute;
+      width: 300px; height: 300px; border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-150%, -50%);
+      transition: transform 0.5s ease-out;
+      z-index: 0;
+    }
+    .btn:hover::before { transform: translate(-50%, -50%); }
+    .btn:hover { transform: translateY(-3px); }
+    /* Íconos y spans siempre por encima del círculo deslizante */
+    .btn i, .btn span { position: relative; z-index: 2; }
+
+    /* Primario: naranja → teal al hover */
+    .btn-primary { background: var(--orange); color: #fff; }
+    .btn-primary::before { background: var(--teal); }
+    .btn-primary:hover { box-shadow: 0 12px 30px rgba(0,187,174,0.35); }
+
+    /* Contorno: borde → navy al hover */
+    .btn-outline { background: transparent; color: var(--navy); border: 2px solid var(--border); }
+    .btn-outline::before { background: var(--navy); }
+    .btn-outline:hover { color: #fff; border-color: var(--navy); box-shadow: 0 12px 30px rgba(34,34,34,0.2); }
+
+    /* Teal: teal → naranja al hover */
+    .btn-teal { background: var(--teal); color: #fff; }
+    .btn-teal::before { background: var(--orange); }
+    .btn-teal:hover { box-shadow: 0 12px 30px rgba(255,155,36,0.35); }
+
+    /* Blanco (CTA): blanco → navy al hover */
+    .btn-white { background: #fff; color: var(--teal); }
+    .btn-white::before { background: var(--navy); }
+    .btn-white:hover { color: #fff; box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+
+    /* Ghost (CTA): borde blanco → blanco al hover */
+    .btn-ghost { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.7); }
+    .btn-ghost::before { background: rgba(255,255,255,0.15); }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.9); }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+    @keyframes floatReverse { 0%,100%{transform:translateY(-10px)} 50%{transform:translateY(8px)} }
+    @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+    @keyframes slideInLeft { from{opacity:0;transform:translateX(-50px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes slideInRight { from{opacity:0;transform:translateX(50px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes countUp { from{opacity:0} to{opacity:1} }
+    @keyframes wave { 0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%} 50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%} }
+    @keyframes heartbeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.3)} 28%{transform:scale(1)} 42%{transform:scale(1.3)} 70%{transform:scale(1)} }
+    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+
+    .float { animation: float 4s ease-in-out infinite; }
+    .float-rev { animation: floatReverse 5s ease-in-out infinite; }
+    .spin-slow { animation: spin 20s linear infinite; }
+
+    /* ===== REVEAL ON SCROLL ===== */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-50px); transition: all 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(50px); transition: all 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ===== TOP BAR ===== */
+    .topbar { background: var(--teal); color: #fff; padding: 10px 0; font-size: 0.85rem; }
+    .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .topbar-left { display: flex; gap: 20px; flex-wrap: wrap; }
+    .topbar-left span { display: flex; align-items: center; gap: 6px; }
+    .topbar-left i { color: rgba(255,255,255,0.8); }
+    .topbar-right { display: flex; gap: 12px; }
+    .topbar-right a { width: 28px; height: 28px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+    .topbar-right a:hover { background: rgba(255,255,255,0.35); }
+
+    /* ===== NAVBAR ===== */
+    .navbar { background: #fff; padding: 16px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.08); transition: all 0.3s; }
+    .navbar.scrolled { padding: 10px 0; box-shadow: 0 4px 30px rgba(0,0,0,0.12); }
+    .navbar .container { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 54px; height: 54px; background: var(--orange); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #fff; box-shadow: 0 4px 15px rgba(255,155,36,0.3); }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .logo-text .name { font-family: 'Fredoka', sans-serif; font-size: 1.15rem; color: var(--navy); }
+    .logo-text .sub { font-size: 0.7rem; color: var(--gray); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-links a { padding: 10px 16px; border-radius: 12px; font-weight: 700; font-size: 0.92rem; color: var(--navy); transition: all 0.3s; }
+    .nav-links a:hover, .nav-links a.active { background: rgba(0,187,174,0.08); color: var(--teal); }
+    .nav-cta { display: inline-flex !important; align-items: center; justify-content: center; background: var(--orange); color: #fff !important; border-radius: 50px !important; padding: 10px 24px !important; font-weight: 600; position: relative; overflow: hidden; transition: transform 0.35s ease, box-shadow 0.35s ease; }
+    .nav-cta::before { content: ''; position: absolute; width: 220px; height: 220px; border-radius: 50%; background: var(--teal); top: 50%; left: 50%; transform: translate(-150%, -50%); transition: transform 0.5s ease-out; z-index: 0; pointer-events: none; }
+    .nav-cta:hover::before { transform: translate(-50%, -50%); }
+    .nav-cta span { position: relative; z-index: 2; }
+    .nav-cta:hover { color: #fff !important; box-shadow: 0 6px 20px rgba(0,187,174,0.35); transform: translateY(-2px); background: var(--orange); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .hamburger span { width: 26px; height: 2.5px; background: var(--navy); border-radius: 5px; transition: all 0.3s; }
+    .mobile-menu { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #fff; z-index: 2000; flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 1.4rem; font-weight: 700; color: var(--navy); padding: 12px 32px; border-radius: 16px; transition: all 0.3s; }
+    .mobile-menu a:hover { background: rgba(0,187,174,0.08); color: var(--teal); }
+    .mobile-close { position: absolute; top: 24px; right: 24px; font-size: 1.6rem; cursor: pointer; color: var(--navy); }
+
+    /* ===== HERO ===== */
+    .hero { background: #ffffff; padding: 90px 0 70px; overflow: hidden; position: relative; border-bottom: 1px solid var(--border); }
+    .hero::before { content: ''; position: absolute; top: -120px; right: -120px; width: 560px; height: 560px; background: radial-gradient(circle, rgba(0,187,174,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .hero::after { content: ''; position: absolute; bottom: -100px; left: -100px; width: 460px; height: 460px; background: radial-gradient(circle, rgba(255,155,36,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+    .hero-content { animation: slideInLeft 0.8s ease forwards; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,187,174,0.10); color: var(--teal); font-weight: 600; font-size: 0.85rem; padding: 8px 18px; border-radius: 50px; margin-bottom: 24px; border: 1px solid rgba(0,187,174,0.2); }
+    .hero-tag::before { content: none; }
+    .hero h1 { font-family: 'Fredoka', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; color: var(--navy); line-height: 1.15; }
+    .hero h1 span { color: var(--teal); position: relative; display: inline-block; }
+    .hero h1 span::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 100%; height: 6px; background: rgba(0,187,174,0.18); z-index: -1; border-radius: 4px; }
+    .hero-desc { font-size: 1.1rem; color: var(--gray); margin: 20px 0 36px; line-height: 1.8; max-width: 520px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 32px; margin-top: 48px; }
+    .hero-stat strong { font-family: 'Fredoka', sans-serif; font-size: 2rem; color: var(--navy); display: block; }
+    .hero-stat span { font-size: 0.85rem; color: var(--gray); font-weight: 600; }
+    .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; animation: slideInRight 0.8s ease forwards; }
+    .hero-main-img { width: 440px; height: 440px; object-fit: cover; border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%; box-shadow: var(--shadow-lg); animation: wave 8s ease-in-out infinite; }
+    .hero-bubble { position: absolute; background: #fff; border-radius: 20px; padding: 14px 18px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.9rem; }
+    .hero-bubble.b1 { top: 30px; left: -20px; animation: float 3.5s ease-in-out infinite; }
+    .hero-bubble.b2 { bottom: 60px; right: -30px; animation: float 4.5s ease-in-out infinite 1s; }
+    .hero-bubble.b3 { bottom: 20px; left: 10px; animation: float 3s ease-in-out infinite 0.5s; }
+    .bubble-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .bubble-icon.orange { background: rgba(255,155,36,0.15); color: var(--orange); }
+    .bubble-icon.teal { background: rgba(0,187,174,0.15); color: var(--teal-dark); }
+    .bubble-icon.purple { background: rgba(168,85,247,0.15); color: var(--purple); }
+    .hero-shapes { position: absolute; width: 100%; height: 100%; pointer-events: none; }
+    .shape { position: absolute; border-radius: 50%; opacity: 0.6; }
+    .shape.s1 { width: 70px; height: 70px; background: var(--teal); opacity: 0.12; top: 12%; right: 8%; animation: float 5s ease-in-out infinite; }
+    .shape.s2 { width: 44px; height: 44px; background: var(--orange); opacity: 0.15; bottom: 18%; left: 4%; animation: floatReverse 4s ease-in-out infinite; }
+    .shape.s3 { width: 28px; height: 28px; background: var(--teal); opacity: 0.2; top: 50%; right: 12%; animation: spin 8s linear infinite; border-radius: 6px; }
+
+    /* ===== FEATURES STRIP ===== */
+    .features-strip { background: var(--cream); padding: 40px 0; border-bottom: 1px solid var(--border); }
+    .features-strip .container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .strip-item { display: flex; align-items: center; gap: 16px; }
+    .strip-icon { width: 52px; height: 52px; background: rgba(0,187,174,0.10); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--teal); flex-shrink: 0; }
+    .strip-text strong { display: block; font-weight: 600; font-size: 0.95rem; color: var(--navy); }
+    .strip-text span { font-size: 0.82rem; color: var(--gray); }
+
+    /* ===== ABOUT ===== */
+    .about { padding: 100px 0; background: #fff; }
+    .about .container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-visual { position: relative; }
+    .about-img-main { width: 100%; border-radius: var(--radius-lg); object-fit: cover; height: 480px; box-shadow: var(--shadow-lg); }
+    .about-img-secondary { position: absolute; bottom: -30px; right: -30px; width: 200px; height: 200px; border-radius: 24px; object-fit: cover; border: 6px solid #fff; box-shadow: var(--shadow); }
+    .about-badge-card { position: absolute; top: 30px; left: -30px; background: var(--orange); color: #fff; padding: 20px 24px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(255,155,36,0.4); animation: float 4s ease-in-out infinite; }
+    .about-badge-card strong { font-family: 'Fredoka', sans-serif; font-size: 2.4rem; display: block; line-height: 1; }
+    .about-badge-card span { font-size: 0.8rem; font-weight: 700; opacity: 0.9; }
+    .about-content .badge { background: rgba(0,187,174,0.12); color: var(--teal); border: 1px solid rgba(0,187,174,0.25); }
+    .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+    .about-feature { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: #fff; border: 1px solid var(--border); border-radius: 16px; }
+    .about-feature i { color: var(--teal); font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+    .about-feature span { font-size: 0.92rem; font-weight: 700; color: var(--navy); }
+
+    /* ===== PROGRAMS CAROUSEL (estilo Kindedo) ===== */
+    .programs { padding: 100px 0 80px; background: #FFFDF5; overflow: hidden; }
+    .programs-header { text-align: center; margin-bottom: 56px; }
+    .programs-header .section-sub { margin: 12px auto 0; }
+
+    /* Carousel wrapper */
+    .programs-carousel-wrap { position: relative; max-width: 1280px; margin: 0 auto; padding: 0 64px 56px; }
+    .programs-track-outer { overflow: hidden; padding: 12px 4px 20px; }
+    .programs-track { display: flex; gap: 26px; transition: transform 0.55s cubic-bezier(0.25,1,0.5,1); will-change: transform; }
+
+    /* Cards */
+    .program-card { flex: 0 0 calc(33.333% - 18px); background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 6px 30px rgba(0,0,0,0.07); transition: box-shadow 0.35s, transform 0.35s; }
+    .program-card:hover { transform: translateY(-8px); box-shadow: 0 20px 55px rgba(0,0,0,0.12); }
+
+    /* Thumbnail — imagen con padding interior (estilo Kindedo) */
+    .program-thumb { padding: 14px 14px 0; }
+    .program-thumb img { width: 100%; height: 220px; object-fit: cover; border-radius: 16px; display: block; transition: transform 0.55s ease; }
+    .program-card:hover .program-thumb img { transform: scale(1.04); }
+
+    /* Body */
+    .program-body { padding: 20px 22px 4px; }
+    .program-name { font-family: 'Fredoka', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; text-align: center; }
+    .program-desc { font-size: 0.92rem; color: var(--gray); line-height: 1.7; text-align: center; min-height: 72px; }
+
+    /* Info bar — píldora coloreada al fondo */
+    .program-info-bar { display: flex; align-items: center; border-radius: 50px; overflow: hidden; margin: 20px 0; }
+    .program-card[data-color="orange"] .program-info-bar { background: var(--orange); }
+    .program-card[data-color="teal"]   .program-info-bar { background: var(--teal); }
+    .program-card[data-color="pink"]   .program-info-bar { background: var(--pink); }
+    .program-card[data-color="blue"]   .program-info-bar { background: var(--blue); }
+    .program-info-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 14px 6px; }
+    .info-val   { display: block; font-weight: 700; font-size: 1rem; color: #fff; line-height: 1.2; }
+    .info-label { display: block; font-size: 0.72rem; color: rgba(255,255,255,0.85); margin-top: 2px; font-weight: 500; }
+    .info-sep   { width: 1px; background: rgba(255,255,255,0.35); align-self: stretch; flex-shrink: 0; margin: 10px 0; }
+
+    /* Flechas */
+    .carousel-arrow { position: absolute; top: calc(50% - 48px); transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; background: #fff; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--navy); transition: all 0.3s; z-index: 10; }
+    .carousel-arrow:hover { background: var(--orange); color: #fff; box-shadow: 0 8px 25px rgba(255,155,36,0.4); }
+    .carousel-arrow:disabled { opacity: 0.35; cursor: default; background: #fff; color: var(--gray); box-shadow: none; }
+    .carousel-arrow.prev { left: 0; }
+    .carousel-arrow.next { right: 0; }
+
+    /* Dots */
+    .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 4px; }
+    .carousel-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.15); cursor: pointer; transition: all 0.3s; border: none; padding: 0; }
+    .carousel-dot.active { background: var(--orange); width: 28px; border-radius: 5px; }
+
+    /* ===== WHY US / FAQ ===== */
+    .why-us { padding: 100px 0; background: #ffffff; }
+    .why-us .container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .why-content .section-title { font-size: clamp(2rem, 3.5vw, 2.8rem); }
+    .why-content .section-sub { margin-bottom: 36px; }
+    /* FAQ Accordion */
+    .faq-list { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
+    .faq-item { border: 1.5px solid var(--border); border-radius: 16px; overflow: hidden; transition: all 0.3s; }
+    .faq-item.active { border-color: var(--orange); box-shadow: 0 4px 20px rgba(255,155,36,0.15); }
+    .faq-question { width: 100%; padding: 18px 22px; background: transparent; border: none; text-align: left; font-family: 'Fredoka', sans-serif; font-size: 1rem; font-weight: 600; color: var(--navy); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: all 0.3s; }
+    .faq-item.active .faq-question { background: var(--orange); color: #fff; border-radius: 14px 14px 0 0; }
+    .faq-icon { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; color: var(--navy); transition: all 0.3s; }
+    .faq-item.active .faq-icon { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); color: #fff; }
+    .faq-answer { padding: 18px 22px; font-size: 0.95rem; color: var(--gray); line-height: 1.75; display: none; }
+    .faq-item.active .faq-answer { display: block; }
+    /* Blob image */
+    .why-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+    .blob-wrap { position: relative; width: 420px; height: 420px; }
+    .blob-wrap img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; position: relative; z-index: 2; }
+    .blob-ring { position: absolute; inset: -14px; border-radius: 50%; border: 6px solid var(--orange); opacity: 0.5; z-index: 1; animation: pulse 4s ease-in-out infinite; }
+    .blob-ring-2 { position: absolute; inset: -28px; border-radius: 50%; border: 2px dashed var(--teal); opacity: 0.3; z-index: 1; }
+    .blob-squiggle { position: absolute; z-index: 3; }
+    .blob-squiggle.s1 { bottom: -10px; right: -20px; color: var(--teal); font-size: 2.4rem; animation: floatReverse 4s ease-in-out infinite; }
+    .blob-squiggle.s2 { top: -10px; left: -30px; color: var(--orange); font-size: 1.8rem; animation: float 5s ease-in-out infinite; }
+
+    /* ===== STATS ===== */
+    .stats { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%); padding: 80px 0; position: relative; overflow: hidden; }
+    .stats::before { content: ''; position: absolute; top: -50%; left: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .stats::after { content: ''; position: absolute; bottom: -30%; right: 5%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+    .stats .container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; position: relative; z-index: 1; }
+    .stat-item { text-align: center; color: #fff; }
+    .stat-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #fff; margin: 0 auto 16px; }
+    .stat-num { font-family: 'Fredoka', sans-serif; font-size: 3.2rem; line-height: 1; display: block; font-weight: 700; }
+    .stat-num span.counter { color: #fff; }
+    .stat-label { font-size: 0.9rem; opacity: 0.85; margin-top: 6px; font-weight: 500; }
+
+    /* ===== PILLARS (activities) ===== */
+    .pillars { padding: 100px 0; background: #ffffff; }
+    .pillars-header { text-align: center; margin-bottom: 60px; }
+    .pillars-header .section-sub { margin: 12px auto 0; }
+    .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .pillar-card { background: #fff; border-radius: var(--radius); padding: 40px 32px; text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow); transition: all 0.35s; position: relative; overflow: hidden; }
+    .pillar-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; }
+    .pillar-card:nth-child(1)::before { background: var(--orange); }
+    .pillar-card:nth-child(2)::before { background: var(--teal); }
+    .pillar-card:nth-child(3)::before { background: var(--purple); }
+    .pillar-card:nth-child(4)::before { background: var(--blue); }
+    .pillar-card:nth-child(5)::before { background: var(--green); }
+    .pillar-card:nth-child(6)::before { background: var(--pink); }
+    .pillar-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); border-color: transparent; }
+    .pillar-icon { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.9rem; margin: 0 auto 20px; animation: pulse 4s ease-in-out infinite; }
+    .pillar-card:nth-child(1) .pillar-icon { background: rgba(255,155,36,0.12); color: var(--orange); }
+    .pillar-card:nth-child(2) .pillar-icon { background: rgba(0,187,174,0.12); color: var(--teal-dark); }
+    .pillar-card:nth-child(3) .pillar-icon { background: rgba(168,85,247,0.12); color: var(--purple); }
+    .pillar-card:nth-child(4) .pillar-icon { background: rgba(59,130,246,0.12); color: var(--blue); }
+    .pillar-card:nth-child(5) .pillar-icon { background: rgba(34,197,94,0.12); color: var(--green); }
+    .pillar-card:nth-child(6) .pillar-icon { background: rgba(255,87,123,0.12); color: var(--pink); }
+    .pillar-title { font-family: 'Fredoka', sans-serif; font-size: 1.4rem; color: var(--navy); margin-bottom: 12px; }
+    .pillar-desc { font-size: 0.9rem; color: var(--gray); line-height: 1.7; }
+
+    /* ===== SCHEDULE ===== */
+    .schedule { padding: 100px 0; background: var(--cream); }
+    .schedule .container { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .schedule-cards { display: flex; flex-direction: column; gap: 20px; }
+    .schedule-card { display: flex; align-items: center; gap: 20px; padding: 28px; border-radius: 20px; background: #fff; border: 1px solid var(--border); transition: all 0.3s; cursor: default; box-shadow: var(--shadow); }
+    .schedule-card:hover { border-color: var(--teal); transform: translateX(6px); box-shadow: var(--shadow-lg); }
+    .schedule-age { width: 64px; height: 64px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .schedule-card:nth-child(1) .schedule-age { background: rgba(255,155,36,0.15); color: var(--orange); }
+    .schedule-card:nth-child(2) .schedule-age { background: rgba(0,187,174,0.15); color: var(--teal-dark); }
+    .schedule-card:nth-child(3) .schedule-age { background: rgba(168,85,247,0.15); color: var(--purple); }
+    .schedule-info strong { font-weight: 700; font-size: 1.05rem; color: var(--navy); display: block; }
+    .schedule-info span { font-size: 0.88rem; color: var(--gray); margin-top: 2px; display: block; }
+    .schedule-time { margin-left: auto; text-align: right; }
+    .schedule-time strong { font-family: 'Fredoka', sans-serif; font-size: 1.2rem; color: var(--orange); display: block; }
+    .schedule-time span { font-size: 0.8rem; color: var(--gray); }
+    .schedule-content .section-title { margin-bottom: 12px; }
+
+    /* ===== GALLERY ===== */
+    .gallery { padding: 100px 0; background: #ffffff; }
+    .gallery-header { text-align: center; margin-bottom: 60px; }
+    .gallery-header .section-title { color: var(--navy); }
+    .gallery-header .section-sub { color: var(--gray); margin: 12px auto 0; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 260px); gap: 16px; }
+    .gallery-item { border-radius: 20px; overflow: hidden; position: relative; cursor: pointer; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(27,27,27,0.7) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s; }
+    .gallery-item:hover::after { opacity: 1; }
+    .gallery-item.span2 { grid-column: span 2; }
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-label { position: absolute; bottom: 20px; left: 20px; color: #fff; font-weight: 700; font-size: 1rem; z-index: 2; opacity: 0; transition: opacity 0.4s; }
+    .gallery-item:hover .gallery-label { opacity: 1; }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials { padding: 100px 0; background: var(--cream); border-top: 1px solid var(--border); }
+    .testimonials-header { text-align: center; margin-bottom: 60px; }
+    .testimonials-header .section-sub { margin: 12px auto 0; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .testimonial-card { background: #fff; border-radius: var(--radius); padding: 36px 32px; border: 1px solid var(--border); box-shadow: var(--shadow); position: relative; transition: all 0.3s; }
+    .testimonial-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .testimonial-card::before { content: '\201C'; font-family: 'Fredoka', sans-serif; font-size: 5rem; color: var(--orange); opacity: 0.15; position: absolute; top: 10px; left: 24px; line-height: 1; }
+    .stars { color: var(--yellow); font-size: 0.9rem; margin-bottom: 16px; }
+    .testimonial-text { font-size: 0.95rem; color: var(--gray); line-height: 1.8; margin-bottom: 24px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .author-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 3px solid var(--orange); }
+    .author-avatar-placeholder { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
+    .author-name { font-weight: 700; font-size: 0.95rem; color: var(--navy); display: block; }
+    .author-role { font-size: 0.8rem; color: var(--gray); }
+
+    /* ===== ADMISSION ===== */
+    .admission { padding: 100px 0; background: #fff; border-top: 1px solid var(--border); }
+    .admission-header { text-align: center; margin-bottom: 60px; }
+    .admission-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; }
+    .admission-steps::before { content: ''; position: absolute; top: 40px; left: calc(12.5% + 20px); right: calc(12.5% + 20px); height: 2px; background: repeating-linear-gradient(90deg, var(--orange) 0, var(--orange) 10px, transparent 10px, transparent 20px); z-index: 0; }
+    .step-card { text-align: center; position: relative; z-index: 1; }
+    .step-num { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-family: 'Fredoka', sans-serif; font-size: 1.8rem; color: #fff; position: relative; transition: all 0.3s; }
+    .step-card:nth-child(1) .step-num { background: linear-gradient(135deg, var(--orange), var(--yellow)); }
+    .step-card:nth-child(2) .step-num { background: linear-gradient(135deg, var(--teal), #00E5D4); }
+    .step-card:nth-child(3) .step-num { background: linear-gradient(135deg, var(--purple), #C084FC); }
+    .step-card:nth-child(4) .step-num { background: linear-gradient(135deg, var(--blue), #60A5FA); }
+    .step-card:hover .step-num { transform: scale(1.1) rotate(-5deg); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .step-icon { font-size: 1.6rem; color: #fff; }
+    .step-title { font-weight: 700; font-size: 1.05rem; color: var(--navy); margin-bottom: 8px; }
+    .step-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner { padding: 80px 0; background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%); position: relative; overflow: hidden; }
+    .cta-banner::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+    .cta-banner::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 250px; height: 250px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+    .cta-banner .container { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .cta-text h2 { font-family: 'Fredoka', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: #fff; line-height: 1.2; }
+    .cta-text p { color: rgba(255,255,255,0.85); margin-top: 10px; font-size: 1.05rem; }
+    .cta-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    /* btn-white y btn-ghost definidos arriba en el bloque de botones */
+
+    /* ===== CONTACT ===== */
+    .contact { padding: 100px 0; background: var(--cream); border-top: 1px solid var(--border); }
+    .contact-header { text-align: center; margin-bottom: 60px; }
+    .contact .container > .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 24px; }
+    .contact-item { display: flex; gap: 16px; align-items: flex-start; padding: 24px; background: #fff; border-radius: 20px; box-shadow: var(--shadow); transition: all 0.3s; }
+    .contact-item:hover { transform: translateX(6px); box-shadow: var(--shadow-lg); }
+    .contact-icon { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .contact-icon.orange { background: rgba(255,155,36,0.15); color: var(--orange); }
+    .contact-icon.teal { background: rgba(0,187,174,0.15); color: var(--teal); }
+    .contact-icon.purple { background: rgba(168,85,247,0.15); color: var(--purple); }
+    .contact-icon.blue { background: rgba(59,130,246,0.15); color: var(--blue); }
+    .contact-item-title { font-weight: 700; font-size: 0.9rem; color: var(--navy); margin-bottom: 4px; display: block; }
+    .contact-item-val { font-size: 0.95rem; color: var(--gray); }
+    .contact-form { background: #fff; border-radius: var(--radius-lg); padding: 48px; box-shadow: var(--shadow-lg); }
+    .contact-form h3 { font-family: 'Fredoka', sans-serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 8px; }
+    .contact-form p { color: var(--gray); font-size: 0.92rem; margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .form-group label { font-weight: 700; font-size: 0.88rem; color: var(--navy); }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 14px 18px; border: 2px solid #E5E7EB; border-radius: 14px; font-size: 0.95rem;
+      font-family: 'Fredoka', sans-serif; outline: none; transition: all 0.3s; background: #fff;
+      color: var(--navy);
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--teal); background: #fff; box-shadow: 0 0 0 4px rgba(0,187,174,0.1); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--orange), var(--orange-light)); color: #fff; border: none; border-radius: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: 'Fredoka', sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .form-submit:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(255,155,36,0.4); }
+
+    /* ===== MAP ===== */
+    .map-section { padding: 0 24px 60px; background: var(--cream); }
+    .map-section-inner { height: 420px; position: relative; overflow: hidden; border-radius: 24px; max-width: 1200px; margin: 0 auto; box-shadow: 0 8px 40px rgba(0,0,0,0.1); }
+    .map-section-inner iframe { width: 100%; height: 100%; border: none; }
+    .map-section-inner .map-overlay { border-radius: 16px; }
+    .map-overlay { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); background: #fff; border-radius: 16px; padding: 14px 24px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.9rem; color: var(--navy); white-space: nowrap; }
+    .map-overlay i { color: var(--orange); }
+
+    /* ===== FOOTER ===== */
+    .footer { background: #0C0C11; color: #fff; padding: 70px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px; margin-bottom: 48px; }
+    .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .footer-desc { font-size: 0.9rem; opacity: 0.65; line-height: 1.8; max-width: 280px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social a { width: 40px; height: 40px; border-radius: 12px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+    .footer-social a:hover { background: var(--orange); transform: translateY(-3px); }
+    .footer-col h4 { font-weight: 700; font-size: 1rem; margin-bottom: 20px; color: #fff; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: 0.88rem; opacity: 0.65; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+    .footer-col ul li a:hover { opacity: 1; color: var(--orange); padding-left: 4px; }
+    .footer-col ul li a i { font-size: 0.7rem; color: var(--orange); }
+    .footer-contact li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; opacity: 0.65; margin-bottom: 12px; }
+    .footer-contact i { color: var(--orange); margin-top: 2px; flex-shrink: 0; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.85rem; opacity: 0.5; }
+    .footer-bottom span { font-size: 0.85rem; opacity: 0.5; }
+
+    /* ===== WHATSAPP BUTTON ===== */
+    .whatsapp-btn { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #fff; box-shadow: 0 6px 24px rgba(37,211,102,0.5); z-index: 999; transition: all 0.3s; animation: heartbeat 2.5s ease-in-out infinite; }
+    .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(37,211,102,0.6); }
+
+    /* ===== SCROLL TO TOP ===== */
+    .scroll-top { position: fixed; bottom: 100px; right: 30px; width: 44px; height: 44px; background: var(--orange); color: #fff; border-radius: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 16px rgba(255,155,36,0.4); opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 999; border: none; }
+    .scroll-top.visible { opacity: 1; pointer-events: auto; }
+    .scroll-top:hover { background: var(--orange-light); transform: translateY(-3px); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero .container { grid-template-columns: 1fr; text-align: center; }
+      .hero-content { order: 2; }
+      .hero-visual { order: 1; }
+      .hero-desc { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .hero-main-img { width: 340px; height: 340px; }
+      .about .container { grid-template-columns: 1fr; }
+      .why-us .container { grid-template-columns: 1fr; }
+      .blob-wrap { width: 320px; height: 320px; }
+      .schedule .container { grid-template-columns: 1fr; }
+      .contact .container > .contact-grid { grid-template-columns: 1fr; }
+      .program-card { flex: 0 0 calc(50% - 13px); }
+      .programs-carousel-wrap { padding: 0 48px 48px; }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .admission-steps { grid-template-columns: repeat(2, 1fr); }
+      .admission-steps::before { display: none; }
+      .features-strip .container { grid-template-columns: repeat(2, 1fr); }
+      .stats .container { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .topbar .container { flex-direction: column; text-align: center; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero-main-img { width: 280px; height: 280px; }
+      .hero-bubble { display: none; }
+      .blob-wrap { width: 260px; height: 260px; }
+      .why-visual { display: none; }
+      .program-card { flex: 0 0 calc(85% - 13px); }
+      .programs-carousel-wrap { padding: 0 36px 40px; }
+      .carousel-arrow { width: 40px; height: 40px; font-size: 0.85rem; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item.span2 { grid-column: span 1; }
+      .gallery-item.tall { grid-row: span 1; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .admission-steps { grid-template-columns: 1fr 1fr; }
+      .stats .container { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-banner .container { flex-direction: column; text-align: center; }
+      .cta-actions { justify-content: center; }
+      .contact-form { padding: 28px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2rem; }
+      .section-title { font-size: 1.7rem; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .admission-steps { grid-template-columns: 1fr; }
+      .features-strip .container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span><i class="fas fa-phone"></i> <span data-cms="tel">952 568 995</span></span>
+        <span><i class="fas fa-envelope"></i> <span data-cms="email">ieijesusmaestro@hotmail.com</span></span>
+        <span><i class="fas fa-clock"></i> <span data-cms="horario">Lun – Vie: 8:00 AM – 1:15 PM</span></span>
+      </div>
+      <div class="topbar-right">
+        <a data-cms="facebook" href="https://www.facebook.com/IEI-Jes%C3%BAs-Maestro-1530110030565071" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="logo">
+        <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="logo-text">
+          <span class="name">IEI Jesús Maestro</span>
+          <span class="sub">Jardín de Infancia · Chorrillos</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#inicio" class="active">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#programas">Programas</a></li>
+        <li><a href="#actividades">Actividades</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#admision">Admisión</a></li>
+        <li><a href="#contacto" class="nav-cta"><span>Contáctanos</span></a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <span class="mobile-close" id="mobileClose"><i class="fas fa-times"></i></span>
+    <a href="#inicio" class="mobile-link"><i class="fas fa-home"></i> Inicio</a>
+    <a href="#nosotros" class="mobile-link"><i class="fas fa-heart"></i> Nosotros</a>
+    <a href="#programas" class="mobile-link"><i class="fas fa-book-open"></i> Programas</a>
+    <a href="#actividades" class="mobile-link"><i class="fas fa-palette"></i> Actividades</a>
+    <a href="#galeria" class="mobile-link"><i class="fas fa-images"></i> Galería</a>
+    <a href="#admision" class="mobile-link"><i class="fas fa-pencil-alt"></i> Admisión</a>
+    <a href="#contacto" class="mobile-link"><i class="fas fa-phone"></i> Contacto</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-tag">Institución Educativa Inicial · Chorrillos</div>
+        <h1>Donde la <span>infancia</span> florece con amor y aprendizaje</h1>
+        <p class="hero-desc" data-cms="hero-desc">En IEI Jesús Maestro formamos niños y niñas felices, curiosos y seguros de sí mismos, desde una visión humanista cristiana llena de valores, creatividad y juego.</p>
+        <div class="hero-actions">
+          <a href="#admision" class="btn btn-primary"><i class="fas fa-star"></i> <span>Inscríbete ahora</span></a>
+          <a href="#nosotros" class="btn btn-outline"><i class="fas fa-play-circle"></i> <span>Conoce más</span></a>
+        </div>
+        <div class="hero-stats" data-cms="hero-stats">
+          <div class="hero-stat">
+            <strong>20+</strong>
+            <span>Años de experiencia</span>
+          </div>
+          <div class="hero-stat">
+            <strong>500+</strong>
+            <span>Niños graduados</span>
+          </div>
+          <div class="hero-stat">
+            <strong>100%</strong>
+            <span>Amor y dedicación</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-shapes">
+          <div class="shape s1"></div>
+          <div class="shape s2"></div>
+          <div class="shape s3"></div>
+        </div>
+        <!-- Placeholder image colorida para el hero -->
+        <img
+          src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=600&q=80"
+          alt="Niños felices en el jardín"
+          class="hero-main-img"
+        />
+        <div class="hero-bubble b1">
+          <div class="bubble-icon orange"><i class="fas fa-palette"></i></div>
+          <div>
+            <strong>Arte y Creatividad</strong>
+            <small style="display:block;color:#999;font-size:0.78rem">Talleres semanales</small>
+          </div>
+        </div>
+        <div class="hero-bubble b2">
+          <div class="bubble-icon teal"><i class="fas fa-trophy"></i></div>
+          <div>
+            <strong>+20 años</strong>
+            <small style="display:block;color:#999;font-size:0.78rem">de excelencia</small>
+          </div>
+        </div>
+        <div class="hero-bubble b3">
+          <div class="bubble-icon purple"><i class="fas fa-shield-alt"></i></div>
+          <div>
+            <strong>Ambiente seguro</strong>
+            <small style="display:block;color:#999;font-size:0.78rem">y amoroso</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES STRIP -->
+  <div class="features-strip">
+    <div class="container">
+      <div class="strip-item reveal">
+        <div class="strip-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="strip-text">
+          <strong>Docentes Certificadas</strong>
+          <span>Formadas en educación inicial</span>
+        </div>
+      </div>
+      <div class="strip-item reveal">
+        <div class="strip-icon"><i class="fas fa-shield-alt"></i></div>
+        <div class="strip-text">
+          <strong>Ambiente Seguro</strong>
+          <span>Infraestructura acondicionada</span>
+        </div>
+      </div>
+      <div class="strip-item reveal">
+        <div class="strip-icon"><i class="fas fa-seedling"></i></div>
+        <div class="strip-text">
+          <strong>Enfoque Humanista</strong>
+          <span>Valores y desarrollo integral</span>
+        </div>
+      </div>
+      <div class="strip-item reveal">
+        <div class="strip-icon"><i class="fas fa-laptop"></i></div>
+        <div class="strip-text">
+          <strong>Tecnología Educativa</strong>
+          <span>Aprendizaje del siglo XXI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="nosotros">
+    <div class="container">
+      <div class="about-visual reveal-left">
+        <img
+          src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=700&q=80"
+          alt="Niños aprendiendo"
+          class="about-img-main"
+        />
+        <div class="about-badge-card">
+          <strong>20+</strong>
+          <span>Años formando<br>corazones</span>
+        </div>
+        <img
+          src="https://images.unsplash.com/photo-1470116945706-e6bf5d5a53ca?w=300&q=80"
+          alt="Ambiente seguro y amoroso"
+          class="about-img-secondary"
+        />
+      </div>
+      <div class="about-content reveal-right">
+        <div class="badge">¿Quiénes Somos?</div>
+        <h2 class="section-title">Una familia dedicada a la primera infancia</h2>
+        <p class="section-sub" data-cms="nosotros-desc">Nuestra misión es educar y formar a niños y niñas desde una visión humanista cristiana, donde la enseñanza sea un diálogo entre la fe, la cultura y la vida, dentro de los valores cristianos. Somos una institución educativa parroquial promovida por la <strong>Congregación Hermanas de la Caridad de San Vicente de Paúl</strong>, comprometida con la primera infancia en Chorrillos desde hace más de 20 años.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>Visión humanista cristiana</span>
+          </div>
+          <div class="about-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>Método lúdico y activo</span>
+          </div>
+          <div class="about-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>Aulas equipadas y modernas</span>
+          </div>
+          <div class="about-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>Área de psicología y tutoría</span>
+          </div>
+          <div class="about-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>Comunicación constante con padres</span>
+          </div>
+          <div class="about-feature">
+            <i class="fas fa-check-circle"></i>
+            <span>Resolución UGEL certificada</span>
+          </div>
+        </div>
+        <div style="margin-top:36px; display:flex; gap:16px; flex-wrap:wrap;">
+          <a href="#admision" class="btn btn-primary"><i class="fas fa-arrow-right"></i> <span>Ver admisión</span></a>
+          <a href="#contacto" class="btn btn-outline"><span>Contáctanos</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="programs" id="programas">
+    <div class="container">
+      <div class="programs-header reveal">
+        <div class="badge" style="background:var(--purple)">Nuestros Programas</div>
+        <h2 class="section-title">Educación por edades,<br>aprendizaje para toda la vida</h2>
+        <p class="section-sub">Cada etapa del desarrollo infantil recibe una atención especializada con metodologías pensadas para el ritmo y la curiosidad de cada niño.</p>
+      </div>
+    </div>
+    <div class="programs-carousel-wrap">
+      <button class="carousel-arrow prev" id="progPrev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+      <div class="programs-track-outer">
+        <div class="programs-track" id="programsTrack">
+
+          <div class="program-card" data-color="orange">
+            <div class="program-thumb">
+              <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=600&q=80" alt="Aula Iniciación 3 años" />
+            </div>
+            <div class="program-body">
+              <div class="program-name">Aula Iniciación</div>
+              <p class="program-desc">Primeros pasos en la socialización, el juego simbólico y el descubrimiento del mundo a través de los sentidos.</p>
+              <div class="program-info-bar">
+                <div class="program-info-item"><span class="info-val">3 años</span><span class="info-label">edad</span></div>
+                <div class="info-sep"></div>
+                <div class="program-info-item"><span class="info-val">5 días</span><span class="info-label">por semana</span></div>
+                <div class="info-sep"></div>
+                <div class="program-info-item"><span class="info-val">5h 15m</span><span class="info-label">por día</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="program-card" data-color="pink">
+            <div class="program-thumb">
+              <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80" alt="Aula Exploración 4 años" />
+            </div>
+            <div class="program-body">
+              <div class="program-name">Aula Exploración</div>
+              <p class="program-desc">Desarrollo del lenguaje oral, pensamiento lógico, creatividad artística y habilidades sociales fundamentales.</p>
+              <div class="program-info-bar">
+                <div class="program-info-item"><span class="info-val">4 años</span><span class="info-label">edad</span></div>
+                <div class="info-sep"></div>
+                <div class="program-info-item"><span class="info-val">5 días</span><span class="info-label">por semana</span></div>
+                <div class="info-sep"></div>
+                <div class="program-info-item"><span class="info-val">5h 15m</span><span class="info-label">por día</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="program-card" data-color="teal">
+            <div class="program-thumb">
+              <img src="https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=600&q=80" alt="Aula Preparación 5 años" />
+            </div>
+            <div class="program-body">
+              <div class="program-name">Aula Preparación</div>
+              <p class="program-desc">Aprestamiento para primaria, lectoescritura inicial, matemáticas básicas y autonomía personal consolidada.</p>
+              <div class="program-info-bar">
+                <div class="program-info-item"><span class="info-val">5 años</span><span class="info-label">edad</span></div>
+                <div class="info-sep"></div>
+                <div class="program-info-item"><span class="info-val">5 días</span><span class="info-label">por semana</span></div>
+                <div class="info-sep"></div>
+                <div class="program-info-item"><span class="info-val">5h 15m</span><span class="info-label">por día</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="program-card" data-color="blue">
+            <div class="program-thumb">
+              <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&q=80" alt="Programa Plus extracurricular" />
+            </div>
+            <div class="program-body">
+              <div class="program-name">Programa Plus</div>
+              <p class="program-desc">Talleres de inglés, computación, danza y arte para enriquecer la experiencia educativa de todos los niños.</p>
+              <div class="program-info-bar">
+                <div class="program-info-item"><span class="info-val">3–5</span><span class="info-label">años</span></div>
+                <div class="info-sep"></div>
+                <div class="program-info-item"><span class="info-val">Flexible</span><span class="info-label">horario</span></div>
+                <div class="info-sep"></div>
+                <div class="program-info-item"><span class="info-val">Talleres</span><span class="info-label">variados</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <button class="carousel-arrow next" id="progNext" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+      <div class="carousel-dots" id="progDots"></div>
+    </div>
+  </section>
+
+  <!-- WHY US / FAQ -->
+  <section class="why-us">
+    <div class="container">
+      <div class="why-content reveal-left">
+        <div class="badge">Conoce más sobre nosotros</div>
+        <h2 class="section-title">Conoce Más sobre<br>IEI Jesús Maestro</h2>
+        <p class="section-sub">Respondemos las preguntas más frecuentes de los padres de familia sobre nuestra institución.</p>
+        <div class="faq-list" data-cms="faq-list">
+          <div class="faq-item active">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              ¿Cuál es la mejor edad para ingresar al jardín?
+              <span class="faq-icon"><i class="fas fa-times"></i></span>
+            </button>
+            <div class="faq-answer">Los niños pueden ingresar a partir de los 3 años. En esta etapa el jardín ofrece el ambiente ideal para el desarrollo social, emocional y cognitivo temprano que marca la diferencia en toda la trayectoria escolar.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              ¿Qué metodología de enseñanza utilizan?
+              <span class="faq-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">Trabajamos con un enfoque humanista cristiano basado en el aprendizaje lúdico y activo. Integramos juego, arte, exploración y valores para que cada niño aprenda a su propio ritmo en un ambiente seguro y estimulante.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              ¿Cómo se comunican con los padres?
+              <span class="faq-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">Mantenemos comunicación constante a través de WhatsApp, reuniones periódicas y una plataforma de seguimiento donde los padres pueden ver los avances, actividades y reportes de sus hijos en tiempo real.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              ¿Qué documentos necesito para la inscripción?
+              <span class="faq-icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">Para la inscripción necesitas: DNI del alumno (o partida de nacimiento), DNI de ambos padres o apoderado, constancia de matrícula del año anterior (SIAGIE), carnet de vacunación actualizado y dos fotografías recientes del niño. Nuestro equipo te acompaña en cada paso del proceso.</div>
+          </div>
+        </div>
+      </div>
+      <div class="why-visual reveal-right">
+        <div class="blob-wrap">
+          <div class="blob-ring"></div>
+          <div class="blob-ring-2"></div>
+          <img src="https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=600&q=80" alt="Niños aprendiendo en IEI Jesús Maestro" />
+          <div class="blob-squiggle s1"><i class="fas fa-minus"></i><i class="fas fa-minus"></i></div>
+          <div class="blob-squiggle s2"><i class="fas fa-circle" style="font-size:0.5rem"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="container">
+      <div class="stat-item reveal">
+        <span class="stat-icon"><i class="fas fa-child"></i></span>
+        <span class="stat-num"><span class="counter" data-target="500">0</span>+</span>
+        <span class="stat-label">Niños graduados</span>
+      </div>
+      <div class="stat-item reveal" style="transition-delay:0.15s">
+        <span class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+        <span class="stat-num"><span class="counter" data-target="15">0</span></span>
+        <span class="stat-label">Docentes especializadas</span>
+      </div>
+      <div class="stat-item reveal" style="transition-delay:0.3s">
+        <span class="stat-icon"><i class="fas fa-calendar-alt"></i></span>
+        <span class="stat-num"><span class="counter" data-target="20">0</span>+</span>
+        <span class="stat-label">Años de experiencia</span>
+      </div>
+      <div class="stat-item reveal" style="transition-delay:0.45s">
+        <span class="stat-icon"><i class="fas fa-star"></i></span>
+        <span class="stat-num"><span class="counter" data-target="98">0</span>%</span>
+        <span class="stat-label">Padres satisfechos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLARS / ACTIVIDADES -->
+  <section class="pillars" id="actividades">
+    <div class="container">
+    <div class="pillars-header reveal">
+      <div class="badge" style="background:var(--green)">Actividades y Talleres</div>
+      <h2 class="section-title">Aprendemos jugando, crecemos soñando</h2>
+      <p class="section-sub">Ofrecemos una propuesta pedagógica rica en experiencias que despiertan la curiosidad y el amor por el aprendizaje.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card reveal" style="transition-delay:0.1s">
+        <div class="pillar-icon"><i class="fas fa-futbol"></i></div>
+        <div class="pillar-title">Deporte y Movimiento</div>
+        <p class="pillar-desc">Actividades físicas que desarrollan la coordinación, el trabajo en equipo y el amor por el deporte desde temprana edad.</p>
+      </div>
+      <div class="pillar-card reveal" style="transition-delay:0.2s">
+        <div class="pillar-icon"><i class="fas fa-laptop"></i></div>
+        <div class="pillar-title">Tecnología Educativa</div>
+        <p class="pillar-desc">Introducción al mundo digital con herramientas interactivas y actividades de pensamiento computacional adaptadas a la edad.</p>
+      </div>
+      <div class="pillar-card reveal" style="transition-delay:0.3s">
+        <div class="pillar-icon"><i class="fas fa-heart"></i></div>
+        <div class="pillar-title">Valores y Convivencia</div>
+        <p class="pillar-desc">Formación en virtudes, respeto, solidaridad y amor al prójimo desde una perspectiva humanista cristiana.</p>
+      </div>
+      <div class="pillar-card reveal" style="transition-delay:0.1s">
+        <div class="pillar-icon"><i class="fas fa-globe-americas"></i></div>
+        <div class="pillar-title">Idiomas (Inglés)</div>
+        <p class="pillar-desc">Taller de inglés pensado para niños que introduce vocabulario, canciones y juegos en un ambiente divertido.</p>
+      </div>
+      <div class="pillar-card reveal" style="transition-delay:0.2s">
+        <div class="pillar-icon"><i class="fas fa-palette"></i></div>
+        <div class="pillar-title">Arte y Creatividad</div>
+        <p class="pillar-desc">Pintura, manualidades, música y expresión corporal para despertar el artista que hay en cada niño.</p>
+      </div>
+      <div class="pillar-card reveal" style="transition-delay:0.3s">
+        <div class="pillar-icon"><i class="fas fa-brain"></i></div>
+        <div class="pillar-title">Estimulación Cognitiva</div>
+        <p class="pillar-desc">Juegos lógicos, cuentos, rompecabezas y actividades científicas para desarrollar la inteligencia y la curiosidad.</p>
+      </div>
+    </div>
+    </div><!-- /container -->
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="schedule" id="horarios">
+    <div class="container">
+      <div class="schedule-content reveal-left">
+        <div class="badge">Horarios</div>
+        <h2 class="section-title">Organizamos el día para el desarrollo óptimo</h2>
+        <p class="section-sub">Nuestros horarios están diseñados para respetar el ritmo natural de cada etapa del desarrollo infantil.</p>
+        <div style="margin-top:32px;">
+          <a href="#admision" class="btn btn-primary"><i class="fas fa-calendar-check"></i> <span>Solicitar visita</span></a>
+        </div>
+      </div>
+      <div class="schedule-cards reveal-right">
+        <div class="schedule-card">
+          <div class="schedule-age"><i class="fas fa-baby"></i></div>
+          <div class="schedule-info">
+            <strong>Aula de 3 años</strong>
+            <span>Lunes a Viernes</span>
+          </div>
+          <div class="schedule-time">
+            <strong>8:00 – 1:15</strong>
+            <span>5h 15min</span>
+          </div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-age"><i class="fas fa-seedling"></i></div>
+          <div class="schedule-info">
+            <strong>Aula de 4 años</strong>
+            <span>Lunes a Viernes</span>
+          </div>
+          <div class="schedule-time">
+            <strong>8:00 – 1:15</strong>
+            <span>5h 15min</span>
+          </div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-age"><i class="fas fa-rocket"></i></div>
+          <div class="schedule-info">
+            <strong>Aula de 5 años</strong>
+            <span>Lunes a Viernes</span>
+          </div>
+          <div class="schedule-time">
+            <strong>8:00 – 1:15</strong>
+            <span>5h 15min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="galeria">
+    <div class="container">
+    <div class="gallery-header reveal">
+      <div class="badge">Galería</div>
+      <h2 class="section-title">Momentos que quedan en el corazón</h2>
+      <p class="section-sub">Cada día es una aventura llena de aprendizaje, risas y descubrimientos.</p>
+    </div>
+    <div class="gallery-grid" data-cms="galeria-grid">
+      <div class="gallery-item span2 reveal">
+        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80" alt="Actividad grupal" />
+        <span class="gallery-label">Actividades en grupo</span>
+      </div>
+      <div class="gallery-item tall reveal" style="transition-delay:0.1s">
+        <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=500&q=80" alt="Aprendizaje" />
+        <span class="gallery-label">Aprendemos juntos</span>
+      </div>
+      <div class="gallery-item reveal" style="transition-delay:0.2s">
+        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=500&q=80" alt="Recreo" />
+        <span class="gallery-label">Hora del recreo</span>
+      </div>
+      <div class="gallery-item reveal" style="transition-delay:0.3s">
+        <img src="https://images.unsplash.com/photo-1607453998774-d533f65dac99?w=500&q=80" alt="Arte" />
+        <span class="gallery-label">Taller de arte</span>
+      </div>
+    </div>
+    </div><!-- /.container -->
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonios">
+    <div class="container">
+    <div class="testimonials-header reveal">
+      <div class="badge">Testimonios</div>
+      <h2 class="section-title">Lo que dicen nuestras familias</h2>
+      <p class="section-sub">La confianza de los padres es nuestro mayor logro y motivación.</p>
+    </div>
+    <div class="testimonials-grid" data-cms="testimonios-grid">
+      <div class="testimonial-card reveal" style="transition-delay:0.1s">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Mis hijos crecieron felices en el jardín Jesús Maestro. Las maestras son increíbles, siempre pendientes de cada niño. No podría haber elegido mejor lugar para ellos."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar-placeholder" style="background:linear-gradient(135deg,var(--orange),var(--yellow))">M</div>
+          <div>
+            <span class="author-name">María González</span>
+            <span class="author-role">Madre de alumna de 4 años</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:0.2s">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Lo que más valoro es la comunicación constante con las docentes. Siempre sé cómo va mi hijo, qué aprendió y cómo se portó. Es un jardín con mucho amor y profesionalismo."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar-placeholder" style="background:linear-gradient(135deg,var(--teal),#00E5D4)">C</div>
+          <div>
+            <span class="author-name">Carlos Ríos</span>
+            <span class="author-role">Padre de alumno de 3 años</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:0.3s">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Mi hija llegó tímida al jardín y en pocos meses se transformó: canta, baila, hace amigos y llega emocionada cada mañana. Eso lo dice todo. Totalmente recomendado."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar-placeholder" style="background:linear-gradient(135deg,var(--purple),#C084FC)">L</div>
+          <div>
+            <span class="author-name">Lucía Paredes</span>
+            <span class="author-role">Madre de alumna de 5 años</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div><!-- /.container -->
+  </section>
+
+  <!-- ADMISSION -->
+  <section class="admission" id="admision">
+    <div class="container">
+    <div class="admission-header reveal">
+      <div class="badge">Proceso de Admisión</div>
+      <h2 class="section-title">4 pasos para unirte a nuestra familia</h2>
+      <p class="section-sub">Inscribir a tu hijo es sencillo. Te acompañamos en cada etapa del proceso.</p>
+    </div>
+    <div class="admission-steps">
+      <div class="step-card reveal" style="transition-delay:0.1s">
+        <div class="step-num"><span class="step-icon"><i class="fas fa-comment-dots"></i></span></div>
+        <div class="step-title">Solicita información</div>
+        <p class="step-desc">Contáctanos por WhatsApp, teléfono o correo para recibir toda la información sobre nuestros programas y vacantes.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.2s">
+        <div class="step-num"><span class="step-icon"><i class="fas fa-school"></i></span></div>
+        <div class="step-title">Visita el jardín</div>
+        <p class="step-desc">Agenda una visita para conocer nuestras instalaciones, conocer a las docentes y resolver todas tus dudas.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.3s">
+        <div class="step-num"><span class="step-icon"><i class="fas fa-file-alt"></i></span></div>
+        <div class="step-title">Presenta documentos</div>
+        <p class="step-desc">Partida de nacimiento, DNI del niño, DNI de los padres, carnet de vacunación y fotos recientes.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.4s">
+        <div class="step-num"><span class="step-icon"><i class="fas fa-check"></i></span></div>
+        <div class="step-title">¡Bienvenido/a!</div>
+        <p class="step-desc">Una vez completado el proceso, tu hijo/a ya forma parte de la gran familia de IEI Jesús Maestro.</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:60px;">
+      <a data-cms="whatsapp-admision" href="https://wa.me/51952568995?text=Hola,%20deseo%20información%20sobre%20la%20admisión" class="btn btn-primary" style="font-size:1.1rem; padding:18px 40px;" target="_blank">
+        <i class="fab fa-whatsapp"></i> <span>Iniciar proceso de admisión</span>
+      </a>
+    </div>
+    </div><!-- /.container -->
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="container">
+      <div class="cta-text">
+        <h2>¿Listo para darle a tu hijo/a<br>el mejor comienzo?</h2>
+        <p>Vacantes limitadas para el año escolar. ¡No te quedes sin tu lugar!</p>
+      </div>
+      <div class="cta-actions">
+        <a data-cms="whatsapp-msg" href="https://wa.me/51952568995?text=Hola,%20quisiera%20información%20sobre%20el%20jardín" class="btn btn-white" target="_blank"><i class="fab fa-whatsapp"></i> <span>Escríbenos</span></a>
+        <a data-cms="tel-link" href="tel:+51952568995" class="btn btn-ghost"><i class="fas fa-phone"></i> <span>Llamar ahora</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contacto">
+    <div class="container">
+    <div class="contact-header reveal">
+      <div class="badge">Contáctanos</div>
+      <h2 class="section-title">Estamos aquí para ayudarte</h2>
+      <p class="section-sub">Escríbenos o visítanos, con gusto atenderemos todas tus consultas.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item reveal">
+          <div class="contact-icon orange"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <span class="contact-item-title">Dirección</span>
+            <span class="contact-item-val" data-cms="direccion">Jr. Carhuarazo Mz. G Lt. 3, Las Delicias, Chorrillos, Lima</span>
+          </div>
+        </div>
+        <div class="contact-item reveal" style="transition-delay:0.1s">
+          <div class="contact-icon teal"><i class="fas fa-phone"></i></div>
+          <div>
+            <span class="contact-item-title">Teléfono / WhatsApp</span>
+            <span class="contact-item-val" data-cms="tel">952 568 995</span>
+          </div>
+        </div>
+        <div class="contact-item reveal" style="transition-delay:0.2s">
+          <div class="contact-icon purple"><i class="fas fa-envelope"></i></div>
+          <div>
+            <span class="contact-item-title">Correo electrónico</span>
+            <span class="contact-item-val" data-cms="email">ieijesusmaestro@hotmail.com</span>
+          </div>
+        </div>
+        <div class="contact-item reveal" style="transition-delay:0.3s">
+          <div class="contact-icon blue"><i class="fas fa-clock"></i></div>
+          <div>
+            <span class="contact-item-title">Horario de atención</span>
+            <span class="contact-item-val" data-cms="horario">Lunes a Viernes: 8:00 AM – 1:15 PM</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal-right">
+        <h3>Envíanos un mensaje</h3>
+        <p>Completa el formulario y te respondemos a la brevedad.</p>
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" placeholder="Tu nombre" required />
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" placeholder="Tu número" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="tu@correo.com" required />
+          </div>
+          <div class="form-group">
+            <label for="edad">Edad del niño/a</label>
+            <select id="edad">
+              <option value="">Seleccionar edad</option>
+              <option>3 años</option>
+              <option>4 años</option>
+              <option>5 años</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" placeholder="¿En qué podemos ayudarte?"></textarea>
+          </div>
+          <button type="submit" class="form-submit"><i class="fas fa-paper-plane"></i> Enviar mensaje</button>
+        </form>
+      </div>
+    </div>
+    </div><!-- /.container -->
+  </section>
+
+  <!-- MAP -->
+  <div class="map-section">
+    <div class="map-section-inner">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.5893!2d-77.0154!3d-12.1864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDExJzExLjEiUyA3N8KwMDAnNTUuNCJX!5e0!3m2!1ses!2spe!4v1234567890"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación IEI Jesús Maestro"
+      ></iframe>
+      <div class="map-overlay">
+        <i class="fas fa-map-marker-alt"></i>
+        Jr. Carhuarazo Mz. G Lt. 3, Las Delicias, Chorrillos
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="logo-text">
+              <span class="name">IEI Jesús Maestro</span>
+              <span class="sub" style="color:rgba(255,255,255,0.5)">Jardín de Infancia</span>
+            </div>
+          </div>
+          <p class="footer-desc">Formamos niños y niñas felices, seguros y creativos desde una visión humanista cristiana. Más de 20 años sembrando amor en Chorrillos.</p>
+          <div class="footer-social">
+            <a data-cms="facebook" href="https://www.facebook.com/IEI-Jes%C3%BAs-Maestro-1530110030565071" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a data-cms="whatsapp-msg" href="https://wa.me/51952568995?text=Hola,%20quisiera%20información%20sobre%20el%20jardín" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="#inicio"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+            <li><a href="#nosotros"><i class="fas fa-chevron-right"></i> Nosotros</a></li>
+            <li><a href="#programas"><i class="fas fa-chevron-right"></i> Programas</a></li>
+            <li><a href="#actividades"><i class="fas fa-chevron-right"></i> Actividades</a></li>
+            <li><a href="#galeria"><i class="fas fa-chevron-right"></i> Galería</a></li>
+            <li><a href="#admision"><i class="fas fa-chevron-right"></i> Admisión</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Documentos</h4>
+          <ul data-cms="documentos-list">
+            <li><a href="https://ieijesusmaestro.edu.pe/documento/1" target="_blank"><i class="fas fa-chevron-right"></i> Reglamento interno</a></li>
+            <li><a href="https://ieijesusmaestro.edu.pe/documento/3" target="_blank"><i class="fas fa-chevron-right"></i> Resolución de apertura</a></li>
+            <li><a href="https://ieijesusmaestro.edu.pe/documento/6" target="_blank"><i class="fas fa-chevron-right"></i> Proceso de matrícula</a></li>
+            <li><a href="https://ieijesusmaestro.edu.pe/documento/8" target="_blank"><i class="fas fa-chevron-right"></i> Etapas de matrícula</a></li>
+            <li><a href="https://ieijesusmaestro.edu.pe/documento/4" target="_blank"><i class="fas fa-chevron-right"></i> Calendario escolar</a></li>
+            <li><a href="https://ieijesusmaestro.edu.pe/documento/2" target="_blank"><i class="fas fa-chevron-right"></i> Proyecto educativo</a></li>
+            <li><a href="https://ieijesusmaestro.edu.pe/documento/5" target="_blank"><i class="fas fa-chevron-right"></i> Evaluación nivel inicial</a></li>
+            <li><a href="https://ieijesusmaestro.edu.pe/documento/7" target="_blank"><i class="fas fa-chevron-right"></i> Informe servicio educativo</a></li>
+            <li><a href="https://ieijesusmaestro.edu.pe/documento/11" target="_blank"><i class="fas fa-chevron-right"></i> Jesús Maestro Informa</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul class="footer-contact">
+            <li><i class="fas fa-map-marker-alt"></i> <span data-cms="direccion">Jr. Carhuarazo Mz. G Lt. 3, Las Delicias, Chorrillos</span></li>
+            <li><i class="fas fa-phone"></i> <span data-cms="tel">952 568 995</span></li>
+            <li><i class="fas fa-envelope"></i> <span data-cms="email">ieijesusmaestro@hotmail.com</span></li>
+            <li><i class="fas fa-clock"></i> <span data-cms="horario">Lun–Vie: 8:00 AM – 1:15 PM</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 IEI Jesús Maestro. Todos los derechos reservados.</p>
+        <span>Hecho con <i class="fas fa-heart" style="color:var(--orange)"></i> para los niños de Chorrillos</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP BUTTON -->
+  <a data-cms="whatsapp-msg" href="https://wa.me/51952568995?text=Hola,%20quisiera%20información%20sobre%20el%20jardín" class="whatsapp-btn" target="_blank" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- SCROLL TO TOP -->
+  <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- SCRIPTS -->
+  <script>
+    /* === PROGRAMS CAROUSEL === */
+    (function() {
+      const track   = document.getElementById('programsTrack');
+      const outer   = track ? track.closest('.programs-track-outer') : null;
+      const btnPrev = document.getElementById('progPrev');
+      const btnNext = document.getElementById('progNext');
+      const dotsEl  = document.getElementById('progDots');
+      if (!track) return;
+
+      const cards       = track.querySelectorAll('.program-card');
+      const totalCards  = cards.length;
+      let current       = 0;
+
+      /* Cuántas tarjetas caben por viewport */
+      function visibleCount() {
+        const w = window.innerWidth;
+        if (w <= 768) return 1;
+        if (w <= 1024) return 2;
+        return 3;
+      }
+
+      /* Ancho de una tarjeta + gap */
+      function cardStep() {
+        if (!cards[0]) return 0;
+        const style = getComputedStyle(track);
+        const gap   = parseFloat(style.gap) || 26;
+        return cards[0].getBoundingClientRect().width + gap;
+      }
+
+      /* Máximo índice de desplazamiento */
+      function maxIndex() {
+        return Math.max(0, totalCards - visibleCount());
+      }
+
+      /* Construir dots */
+      function buildDots() {
+        dotsEl.innerHTML = '';
+        const total = maxIndex() + 1;
+        for (let i = 0; i < total; i++) {
+          const d = document.createElement('button');
+          d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+          d.setAttribute('aria-label', 'Ir al programa ' + (i + 1));
+          d.addEventListener('click', () => goTo(i));
+          dotsEl.appendChild(d);
+        }
+      }
+
+      /* Ir a índice */
+      function goTo(idx) {
+        current = Math.max(0, Math.min(idx, maxIndex()));
+        track.style.transform = 'translateX(-' + (current * cardStep()) + 'px)';
+        /* Dots */
+        dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) =>
+          d.classList.toggle('active', i === current));
+        /* Botones */
+        btnPrev.disabled = current === 0;
+        btnNext.disabled = current >= maxIndex();
+      }
+
+      btnPrev.addEventListener('click', () => goTo(current - 1));
+      btnNext.addEventListener('click', () => goTo(current + 1));
+
+      /* Reconstruir al cambiar tamaño */
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => { buildDots(); goTo(current); }, 150);
+      });
+
+      buildDots();
+      goTo(0);
+
+      /* Touch / swipe */
+      let startX = 0;
+      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+      });
+    })();
+
+    /* === FAQ ACCORDION === */
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isActive = item.classList.contains('active');
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('active');
+        const icon = i.querySelector('.faq-icon i');
+        if (icon) { icon.className = 'fas fa-plus'; }
+      });
+      // Open clicked if it was not active
+      if (!isActive) {
+        item.classList.add('active');
+        const icon = item.querySelector('.faq-icon i');
+        if (icon) { icon.className = 'fas fa-times'; }
+      }
+    }
+
+    /* === NAVBAR === */
+    const navbar = document.getElementById('navbar');
+    const scrollTopBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        navbar.classList.add('scrolled');
+        scrollTopBtn.classList.add('visible');
+      } else {
+        navbar.classList.remove('scrolled');
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* === MOBILE MENU === */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+    hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+    mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    /* === ACTIVE NAV ON SCROLL === */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => observer.observe(s));
+
+    /* === REVEAL ON SCROLL === */
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    /* === COUNTER ANIMATION === */
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(entry.target.dataset.target);
+          const duration = 1800;
+          const step = target / (duration / 16);
+          let current = 0;
+          const timer = setInterval(() => {
+            current = Math.min(current + step, target);
+            entry.target.textContent = Math.floor(current);
+            if (current >= target) clearInterval(timer);
+          }, 16);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => counterObserver.observe(c));
+
+    /* === SMOOTH SCROLL FOR NAV LINKS === */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    /* === FORM SUBMIT === */
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.innerHTML = '<i class="fas fa-check"></i> ¡Mensaje enviado!';
+      btn.style.background = 'linear-gradient(135deg, var(--teal), var(--teal-dark))';
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar mensaje';
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+
+    /* === GALLERY LIGHTBOX HINT === */
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.02)';
+      });
+      item.addEventListener('mouseleave', function() {
+        this.style.transform = '';
+      });
+    });
+  </script>
+
+  <!-- Netlify Identity Widget (necesario para el login del CMS) -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function(user) {
+        if (!user) {
+          window.netlifyIdentity.on('login', function() {
+            document.location.href = '/admin/';
+          });
+        }
+      });
+    }
+  </script>
+
+  <!-- CMS Loader: carga content/*.json y puebla el DOM -->
+  <script src="/cms-loader.js"></script>
+</body>
+</html>

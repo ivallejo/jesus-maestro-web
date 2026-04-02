@@ -1,0 +1,28 @@
+{
+  "lista": [
+    {
+      "src": "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80",
+      "alt": "Actividad grupal",
+      "label": "Actividades en grupo",
+      "clase": "span2"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=500&q=80",
+      "alt": "Aprendizaje",
+      "label": "Aprendemos juntos",
+      "clase": "tall"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=500&q=80",
+      "alt": "Recreo",
+      "label": "Hora del recreo",
+      "clase": ""
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1607453998774-d533f65dac99?w=500&q=80",
+      "alt": "Arte",
+      "label": "Taller de arte",
+      "clase": ""
+    }
+  ]
+}

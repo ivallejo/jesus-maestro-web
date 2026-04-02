@@ -1,0 +1,142 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: es
+
+# Carpeta donde se suben imágenes desde el CMS
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "sitio"
+    label: "Sitio web"
+    files:
+
+      # ── Contacto ────────────────────────────────────────────────────
+      - name: "contacto"
+        label: "📞 Contacto e información"
+        file: "content/contacto.json"
+        fields:
+          - label: "Teléfono"
+            name: "telefono"
+            widget: "string"
+            hint: "Ej: 952 568 995"
+          - label: "Número WhatsApp (código país + número, sin espacios)"
+            name: "whatsapp"
+            widget: "string"
+            hint: "Ej: 51952568995  (51 = código Perú)"
+          - label: "Correo electrónico"
+            name: "email"
+            widget: "string"
+          - label: "Horario de atención"
+            name: "horario"
+            widget: "string"
+            hint: "Ej: Lun – Vie: 8:00 AM – 1:15 PM"
+          - label: "Dirección completa"
+            name: "direccion"
+            widget: "string"
+          - label: "Enlace de Facebook"
+            name: "facebook"
+            widget: "string"
+
+      # ── Hero (sección inicio) ────────────────────────────────────────
+      - name: "hero"
+        label: "🏠 Sección Inicio"
+        file: "content/hero.json"
+        fields:
+          - label: "Descripción principal"
+            name: "descripcion"
+            widget: "text"
+          - label: "Estadísticas"
+            name: "stats"
+            widget: "list"
+            summary: "{{fields.valor}} – {{fields.label}}"
+            fields:
+              - { label: "Valor (ej: 20+)", name: "valor", widget: "string" }
+              - { label: "Etiqueta (ej: Años de experiencia)", name: "label", widget: "string" }
+
+      # ── Nosotros ─────────────────────────────────────────────────────
+      - name: "nosotros"
+        label: "📖 Sección Nosotros"
+        file: "content/nosotros.json"
+        fields:
+          - label: "Descripción / Misión"
+            name: "descripcion"
+            widget: "text"
+            hint: "Puedes usar <strong>texto</strong> para negritas"
+
+      # ── Testimonios ──────────────────────────────────────────────────
+      - name: "testimonios"
+        label: "💬 Testimonios"
+        file: "content/testimonios.json"
+        fields:
+          - label: "Testimonios"
+            name: "lista"
+            widget: "list"
+            summary: "{{fields.nombre}} – {{fields.rol}}"
+            fields:
+              - { label: "Texto del testimonio", name: "texto", widget: "text" }
+              - { label: "Nombre completo", name: "nombre", widget: "string" }
+              - { label: "Descripción (ej: Madre de alumna de 4 años)", name: "rol", widget: "string" }
+              - { label: "Inicial (primera letra del nombre en MAYÚSCULA)", name: "inicial", widget: "string" }
+              - label: "Color del avatar"
+                name: "color"
+                widget: "select"
+                options:
+                  - { label: "Naranja", value: "linear-gradient(135deg,#FF9B24,#FFD23F)" }
+                  - { label: "Verde azulado", value: "linear-gradient(135deg,#00BBAE,#00E5D4)" }
+                  - { label: "Morado", value: "linear-gradient(135deg,#A855F7,#C084FC)" }
+                  - { label: "Rosado", value: "linear-gradient(135deg,#FF577B,#FF9BB0)" }
+                  - { label: "Azul", value: "linear-gradient(135deg,#3B82F6,#93C5FD)" }
+
+      # ── Documentos ───────────────────────────────────────────────────
+      - name: "documentos"
+        label: "📄 Documentos"
+        file: "content/documentos.json"
+        fields:
+          - label: "Documentos"
+            name: "lista"
+            widget: "list"
+            summary: "{{fields.nombre}}"
+            fields:
+              - { label: "Nombre del documento", name: "nombre", widget: "string" }
+              - { label: "Enlace (URL completa)", name: "url", widget: "string" }
+
+      # ── FAQ ──────────────────────────────────────────────────────────
+      - name: "faq"
+        label: "❓ Preguntas frecuentes"
+        file: "content/faq.json"
+        fields:
+          - label: "Preguntas y respuestas"
+            name: "lista"
+            widget: "list"
+            summary: "{{fields.pregunta}}"
+            fields:
+              - { label: "Pregunta", name: "pregunta", widget: "string" }
+              - { label: "Respuesta", name: "respuesta", widget: "text" }
+
+      # ── Galería ──────────────────────────────────────────────────────
+      - name: "galeria"
+        label: "🖼️ Galería de fotos"
+        file: "content/galeria.json"
+        fields:
+          - label: "Imágenes"
+            name: "lista"
+            widget: "list"
+            summary: "{{fields.label}}"
+            fields:
+              - label: "Imagen"
+                name: "src"
+                widget: "image"
+                hint: "Sube una foto o pega una URL de internet"
+              - { label: "Texto alternativo (descripción breve)", name: "alt", widget: "string" }
+              - { label: "Etiqueta visible en la foto", name: "label", widget: "string" }
+              - label: "Tamaño en la galería"
+                name: "clase"
+                widget: "select"
+                default: ""
+                options:
+                  - { label: "Normal", value: "" }
+                  - { label: "Ancho doble (destacada)", value: "span2" }
+                  - { label: "Alto doble", value: "tall" }

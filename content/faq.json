@@ -1,0 +1,20 @@
+{
+  "lista": [
+    {
+      "pregunta": "¿Cuál es la mejor edad para ingresar al jardín?",
+      "respuesta": "Los niños pueden ingresar a partir de los 3 años. En esta etapa el jardín ofrece el ambiente ideal para el desarrollo social, emocional y cognitivo temprano que marca la diferencia en toda la trayectoria escolar."
+    },
+    {
+      "pregunta": "¿Qué metodología de enseñanza utilizan?",
+      "respuesta": "Trabajamos con un enfoque humanista cristiano basado en el aprendizaje lúdico y activo. Integramos juego, arte, exploración y valores para que cada niño aprenda a su propio ritmo en un ambiente seguro y estimulante."
+    },
+    {
+      "pregunta": "¿Cómo se comunican con los padres?",
+      "respuesta": "Mantenemos comunicación constante a través de WhatsApp, reuniones periódicas y una plataforma de seguimiento donde los padres pueden ver los avances, actividades y reportes de sus hijos en tiempo real."
+    },
+    {
+      "pregunta": "¿Qué documentos necesito para la inscripción?",
+      "respuesta": "Para la inscripción necesitas: DNI del alumno (o partida de nacimiento), DNI de ambos padres o apoderado, constancia de matrícula del año anterior (SIAGIE), carnet de vacunación actualizado y dos fotografías recientes del niño. Nuestro equipo te acompaña en cada paso del proceso."
+    }
+  ]
+}

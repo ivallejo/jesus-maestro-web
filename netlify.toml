@@ -1,0 +1,20 @@
+[build]
+  publish = "."
+
+# Habilita Netlify Identity para el CMS
+[build.environment]
+  NODE_VERSION = "18"
+
+# Cabeceras de seguridad
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Los archivos de contenido del CMS siempre deben ser frescos
+[[headers]]
+  for = "/content/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
