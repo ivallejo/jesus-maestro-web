@@ -1,0 +1,112 @@
+/* ===== PREVIEW PANE — IEI Jesús Maestro ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Fredoka', sans-serif; color: #484848; background: #fff; font-size: 16px; line-height: 1.75; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+:root {
+  --orange: #FF9B24; --orange-light: #FFB257;
+  --teal: #00BBAE; --teal-dark: #009E92;
+  --yellow: #FFD23F; --purple: #A855F7;
+  --blue: #3B82F6; --green: #22C55E; --pink: #FF577B;
+  --cream: #F3F3F3; --navy: #222222; --gray: #484848;
+  --border: #E8E8E8; --white: #FFFFFF;
+  --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.10);
+  --radius: 20px; --radius-lg: 32px;
+}
+
+/* ── Wrapper general ── */
+.preview-wrap { padding: 32px; background: #fff; min-height: 100vh; }
+.preview-label {
+  display: inline-block; background: rgba(0,187,174,0.12); color: var(--teal);
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+  padding: 4px 14px; border-radius: 50px; margin-bottom: 20px;
+  border: 1px solid rgba(0,187,174,0.25);
+}
+.section-title { font-size: clamp(1.6rem,3vw,2.4rem); font-weight: 700; color: var(--navy); line-height: 1.2; }
+.section-sub { font-size: 1rem; color: var(--gray); margin-top: 10px; line-height: 1.75; }
+
+/* ── HERO ── */
+.hero-preview { background: #fff; border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+.hero-preview-body { padding: 36px 40px; }
+.hero-tag { display: inline-flex; align-items: center; background: rgba(0,187,174,0.10); color: var(--teal); font-weight: 600; font-size: 0.82rem; padding: 6px 16px; border-radius: 50px; margin-bottom: 20px; border: 1px solid rgba(0,187,174,0.2); }
+.hero-h1 { font-size: clamp(2rem,4vw,3rem); font-weight: 700; color: var(--navy); line-height: 1.15; margin-bottom: 16px; }
+.hero-h1 span { color: var(--teal); }
+.hero-desc-text { font-size: 1.05rem; color: var(--gray); line-height: 1.8; max-width: 520px; margin-bottom: 36px; }
+.hero-stats-row { display: flex; gap: 32px; padding: 24px 0; border-top: 1px solid var(--border); }
+.hero-stat-item strong { font-size: 2rem; color: var(--navy); display: block; font-weight: 700; }
+.hero-stat-item span { font-size: 0.82rem; color: var(--gray); font-weight: 600; }
+
+/* ── NOSOTROS ── */
+.nosotros-preview { border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+.nosotros-preview-body { padding: 36px 40px; }
+.nosotros-desc { font-size: 1rem; color: var(--gray); line-height: 1.8; }
+.about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+.about-feature { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: #fff; border: 1px solid var(--border); border-radius: 14px; }
+.about-feature i { color: var(--teal); font-size: 1.1rem; flex-shrink: 0; }
+.about-feature span { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+
+/* ── TESTIMONIOS ── */
+.testimonios-preview { padding: 24px 0; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+.testimonial-card {
+  background: #fff; border-radius: var(--radius); padding: 30px 28px;
+  border: 1px solid var(--border); box-shadow: var(--shadow); position: relative;
+}
+.testimonial-card::before { content: '\201C'; font-size: 4.5rem; color: var(--orange); opacity: 0.15; position: absolute; top: 8px; left: 22px; line-height: 1; }
+.stars { color: var(--yellow); font-size: 0.88rem; margin-bottom: 14px; }
+.testimonial-text { font-size: 0.92rem; color: var(--gray); line-height: 1.8; margin-bottom: 20px; font-style: italic; }
+.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.author-avatar-placeholder { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; color: #fff; flex-shrink: 0; }
+.author-name { font-weight: 700; font-size: 0.92rem; color: var(--navy); display: block; }
+.author-role { font-size: 0.78rem; color: var(--gray); }
+
+/* ── FAQ ── */
+.faq-preview { padding: 16px 0; }
+.faq-list { display: flex; flex-direction: column; gap: 12px; }
+.faq-item { border: 1.5px solid var(--border); border-radius: 14px; overflow: hidden; }
+.faq-item.active { border-color: var(--orange); box-shadow: 0 4px 16px rgba(255,155,36,0.15); }
+.faq-question { width: 100%; padding: 16px 20px; background: transparent; border: none; text-align: left; font-family: 'Fredoka', sans-serif; font-size: 0.97rem; font-weight: 600; color: var(--navy); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.faq-item.active .faq-question { background: var(--orange); color: #fff; }
+.faq-icon { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.82rem; flex-shrink: 0; }
+.faq-item.active .faq-icon { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); color: #fff; }
+.faq-answer { padding: 16px 20px; font-size: 0.93rem; color: var(--gray); line-height: 1.75; border-top: 1px solid var(--border); }
+
+/* ── DOCUMENTOS ── */
+.documentos-preview { padding: 16px 0; }
+.doc-list { display: flex; flex-direction: column; gap: 12px; }
+.doc-item { display: flex; align-items: center; gap: 16px; padding: 18px 22px; background: #fff; border: 1.5px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); transition: all 0.2s; }
+.doc-item:hover { border-color: var(--teal); }
+.doc-icon { width: 46px; height: 46px; background: rgba(0,187,174,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--teal); font-size: 1.2rem; flex-shrink: 0; }
+.doc-name { font-weight: 600; font-size: 0.95rem; color: var(--navy); }
+.doc-url { font-size: 0.78rem; color: var(--gray); opacity: 0.7; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 280px; }
+
+/* ── GALERÍA ── */
+.galeria-preview { padding: 16px 0; }
+.gallery-grid-preview { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 180px; gap: 12px; }
+.gallery-item-preview { border-radius: 16px; overflow: hidden; position: relative; background: var(--cream); }
+.gallery-item-preview img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-label-preview { position: absolute; bottom: 10px; left: 12px; color: #fff; font-weight: 700; font-size: 0.85rem; background: rgba(0,0,0,0.5); padding: 3px 10px; border-radius: 20px; }
+.gallery-item-preview.span2 { grid-column: span 2; }
+.gallery-item-preview.tall { grid-row: span 2; }
+.gallery-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,187,174,0.1), rgba(255,155,36,0.1)); display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 0.8rem; flex-direction: column; gap: 6px; }
+.gallery-placeholder i { font-size: 1.8rem; color: var(--teal); opacity: 0.5; }
+
+/* ── CONTACTO ── */
+.contacto-preview { padding: 16px 0; }
+.contact-info-grid { display: flex; flex-direction: column; gap: 14px; }
+.contact-item { display: flex; gap: 14px; align-items: flex-start; padding: 20px; background: #fff; border-radius: 18px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.contact-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.contact-icon.orange { background: rgba(255,155,36,0.15); color: var(--orange); }
+.contact-icon.teal { background: rgba(0,187,174,0.15); color: var(--teal); }
+.contact-icon.purple { background: rgba(168,85,247,0.15); color: var(--purple); }
+.contact-icon.blue { background: rgba(59,130,246,0.15); color: var(--blue); }
+.contact-item-title { font-weight: 700; font-size: 0.87rem; color: var(--navy); margin-bottom: 4px; display: block; }
+.contact-item-val { font-size: 0.93rem; color: var(--gray); }
+.wa-badge { display: inline-flex; align-items: center; gap: 6px; background: #25D366; color: #fff; font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-top: 4px; }
+
+/* ── Empty state ── */
+.preview-empty { text-align: center; padding: 60px 20px; color: var(--gray); }
+.preview-empty i { font-size: 2.5rem; color: var(--teal); opacity: 0.4; display: block; margin-bottom: 12px; }
+.preview-empty p { font-size: 0.9rem; opacity: 0.6; }
