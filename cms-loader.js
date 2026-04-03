@@ -28,6 +28,8 @@
 /* ── Contacto ─────────────────────────────────────────────────────── */
 function applyContacto(c) {
   if (!c) return;
+  setAll('[data-cms="contacto_titulo"]', c.titulo);
+  setAll('[data-cms="contacto_sub"]', c.sub);
   setAll('[data-cms="tel"]', c.telefono);
   setAll('[data-cms="email"]', c.email);
   setAll('[data-cms="horario"]', c.horario);
@@ -66,14 +68,20 @@ function applyHero(h) {
 
 /* ── Nosotros ─────────────────────────────────────────────────────── */
 function applyNosotros(n) {
-  if (!n?.descripcion) return;
-  const el = document.querySelector('[data-cms="nosotros-desc"]');
-  if (el) el.innerHTML = n.descripcion;
+  if (!n) return;
+  setAll('[data-cms="nosotros_titulo"]', n.titulo);
+  if (n.descripcion) {
+    const el = document.querySelector('[data-cms="nosotros-desc"]');
+    if (el) el.innerHTML = n.descripcion;
+  }
 }
 
 /* ── Testimonios ──────────────────────────────────────────────────── */
 function applyTestimonios(t) {
-  if (!t?.lista?.length) return;
+  if (!t) return;
+  setAll('[data-cms="testimonios_titulo"]', t.titulo);
+  setAll('[data-cms="testimonios_sub"]', t.sub);
+  if (!t.lista?.length) return;
   const grid = document.querySelector('[data-cms="testimonios-grid"]');
   if (!grid) return;
   grid.innerHTML = t.lista.map((item, i) => `
@@ -102,7 +110,10 @@ function applyDocumentos(d) {
 
 /* ── FAQ ──────────────────────────────────────────────────────────── */
 function applyFaq(f) {
-  if (!f?.lista?.length) return;
+  if (!f) return;
+  setAll('[data-cms="faq_titulo"]', f.titulo);
+  setAll('[data-cms="faq_sub"]', f.sub);
+  if (!f.lista?.length) return;
   const container = document.querySelector('[data-cms="faq-list"]');
   if (!container) return;
   container.innerHTML = f.lista.map((item, i) => `
@@ -117,7 +128,10 @@ function applyFaq(f) {
 
 /* ── Galería ──────────────────────────────────────────────────────── */
 function applyGaleria(g) {
-  if (!g?.lista?.length) return;
+  if (!g) return;
+  setAll('[data-cms="galeria_titulo"]', g.titulo);
+  setAll('[data-cms="galeria_sub"]', g.sub);
+  if (!g.lista?.length) return;
   const grid = document.querySelector('[data-cms="galeria-grid"]');
   if (!grid) return;
   grid.innerHTML = g.lista.map((item, i) => `
@@ -129,7 +143,10 @@ function applyGaleria(g) {
 
 /* ── Programas ────────────────────────────────────────────────────── */
 function applyProgramas(p) {
-  if (!p?.lista?.length) return;
+  if (!p) return;
+  setAll('[data-cms="programas_titulo"]', p.titulo);
+  setAll('[data-cms="programas_sub"]', p.sub);
+  if (!p.lista?.length) return;
   const track = document.querySelector('[data-cms="programas-track"]');
   if (!track) return;
   track.innerHTML = p.lista.map(item => `
@@ -151,10 +168,20 @@ function applyProgramas(p) {
     </div>`).join('');
 }
 
-/* ── Textos (títulos y subtítulos de secciones) ───────────────────── */
+/* ── Textos (títulos y subtítulos de secciones sin pestaña propia) ── */
 function applyTextos(t) {
   if (!t) return;
+  // Solo aplicar campos que no están cubiertos por los JSONs de sección
+  const sectionKeys = new Set([
+    'programas_titulo','programas_sub',
+    'nosotros_titulo',
+    'testimonios_titulo','testimonios_sub',
+    'galeria_titulo','galeria_sub',
+    'faq_titulo','faq_sub',
+    'contacto_titulo','contacto_sub',
+  ]);
   Object.keys(t).forEach(key => {
+    if (sectionKeys.has(key)) return;
     const val = t[key];
     if (!val) return;
     document.querySelectorAll(`[data-cms="${key}"]`).forEach(el => {

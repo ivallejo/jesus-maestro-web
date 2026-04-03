@@ -261,7 +261,6 @@
       <button class="tab-btn" onclick="mostrarSeccion('documentos', this)">📄 Documentos</button>
       <button class="tab-btn" onclick="mostrarSeccion('galeria', this)">🖼️ Galería</button>
       <button class="tab-btn" onclick="mostrarSeccion('programas', this)">📚 Programas</button>
-      <button class="tab-btn" onclick="mostrarSeccion('textos', this)">✏️ Títulos</button>
     </div>
 
     <!-- ── CONTACTO ── -->
@@ -273,6 +272,14 @@
             <div class="seccion-title">Datos de contacto</div>
             <div class="seccion-sub">Teléfono, correo, horario y redes sociales</div>
           </div>
+        </div>
+        <div class="campo">
+          <label>📌 Título de la sección</label>
+          <input type="text" id="c-titulo" placeholder="Estamos aquí para ayudarte" />
+        </div>
+        <div class="campo">
+          <label>💬 Subtítulo de la sección</label>
+          <input type="text" id="c-sub" placeholder="Escríbenos o visítanos..." />
         </div>
         <div class="campo">
           <label>📞 Teléfono <span class="hint">El número que aparece en el encabezado y pie de página</span></label>
@@ -357,6 +364,10 @@
           </div>
         </div>
         <div class="campo">
+          <label>📌 Título de la sección</label>
+          <input type="text" id="n-titulo" placeholder="Una familia dedicada a la primera infancia" />
+        </div>
+        <div class="campo">
           <label>📝 Descripción de la institución</label>
           <textarea id="n-descripcion" rows="6" placeholder="Nuestra misión es..."></textarea>
         </div>
@@ -377,6 +388,14 @@
             <div class="seccion-sub">Agrega, edita o elimina las preguntas que hacen los padres</div>
           </div>
         </div>
+        <div class="campo">
+          <label>📌 Título de la sección</label>
+          <input type="text" id="faq-titulo" placeholder="Conoce Más sobre IEI Jesús Maestro" />
+        </div>
+        <div class="campo">
+          <label>💬 Subtítulo de la sección</label>
+          <textarea id="faq-sub" rows="2" placeholder="Respondemos las preguntas más frecuentes..."></textarea>
+        </div>
         <div class="lista-wrap" id="faq-wrap"></div>
         <button class="btn-agregar" onclick="agregarFaq()"><i class="fas fa-plus"></i> Agregar nueva pregunta</button>
         <div class="guardar-wrap">
@@ -395,6 +414,14 @@
             <div class="seccion-title">Testimonios de padres</div>
             <div class="seccion-sub">Lo que dicen las familias del colegio</div>
           </div>
+        </div>
+        <div class="campo">
+          <label>📌 Título de la sección</label>
+          <input type="text" id="t-titulo" placeholder="Lo que dicen nuestras familias" />
+        </div>
+        <div class="campo">
+          <label>💬 Subtítulo de la sección</label>
+          <input type="text" id="t-sub" placeholder="La confianza de los padres..." />
         </div>
         <div class="lista-wrap" id="testimonios-wrap"></div>
         <button class="btn-agregar" onclick="agregarTestimonio()"><i class="fas fa-plus"></i> Agregar testimonio</button>
@@ -434,6 +461,14 @@
             <div class="seccion-sub">Las imágenes que se muestran en el sitio (pega el enlace de la foto)</div>
           </div>
         </div>
+        <div class="campo">
+          <label>📌 Título de la sección</label>
+          <input type="text" id="g-titulo" placeholder="Momentos que quedan en el corazón" />
+        </div>
+        <div class="campo">
+          <label>💬 Subtítulo de la sección</label>
+          <input type="text" id="g-sub" placeholder="Cada día es una aventura..." />
+        </div>
         <div class="lista-wrap" id="galeria-wrap"></div>
         <button class="btn-agregar" onclick="agregarFoto()"><i class="fas fa-plus"></i> Agregar foto</button>
         <div class="guardar-wrap">
@@ -453,115 +488,19 @@
             <div class="seccion-sub">Los aulas y programas que ofrece el colegio (carousel del sitio)</div>
           </div>
         </div>
+        <div class="campo">
+          <label>📌 Título de la sección</label>
+          <input type="text" id="p-titulo" placeholder="Educación por edades, aprendizaje para toda la vida" />
+        </div>
+        <div class="campo">
+          <label>💬 Subtítulo de la sección</label>
+          <textarea id="p-sub" rows="2" placeholder="Cada etapa del desarrollo infantil..."></textarea>
+        </div>
         <div class="lista-wrap" id="programas-wrap"></div>
         <button class="btn-agregar" onclick="agregarPrograma()"><i class="fas fa-plus"></i> Agregar programa</button>
         <div class="guardar-wrap">
           <button class="btn-guardar" onclick="guardar('programas')"><i class="fas fa-save"></i> Guardar cambios</button>
           <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app#programas" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── TEXTOS ── -->
-    <div class="seccion" id="sec-textos">
-      <div class="seccion-card">
-        <div class="seccion-header">
-          <div class="seccion-icon teal"><i class="fas fa-heading"></i></div>
-          <div>
-            <div class="seccion-title">Títulos y subtítulos</div>
-            <div class="seccion-sub">Los encabezados que aparecen en cada sección del sitio</div>
-          </div>
-        </div>
-
-        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:16px;">📚 Sección Programas</div>
-        <div class="campo">
-          <label>Título</label>
-          <input type="text" id="tx-programas_titulo" placeholder="Educación por edades..." />
-        </div>
-        <div class="campo">
-          <label>Subtítulo</label>
-          <textarea id="tx-programas_sub" rows="2"></textarea>
-        </div>
-
-        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">📖 Sección Nosotros</div>
-        <div class="campo">
-          <label>Título</label>
-          <input type="text" id="tx-nosotros_titulo" placeholder="Una familia dedicada..." />
-        </div>
-
-        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">🎨 Sección Actividades</div>
-        <div class="campo">
-          <label>Título</label>
-          <input type="text" id="tx-actividades_titulo" placeholder="Aprendemos jugando..." />
-        </div>
-        <div class="campo">
-          <label>Subtítulo</label>
-          <textarea id="tx-actividades_sub" rows="2"></textarea>
-        </div>
-
-        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">🕐 Sección Horarios</div>
-        <div class="campo">
-          <label>Título</label>
-          <input type="text" id="tx-horarios_titulo" placeholder="Organizamos el día..." />
-        </div>
-        <div class="campo">
-          <label>Subtítulo</label>
-          <textarea id="tx-horarios_sub" rows="2"></textarea>
-        </div>
-
-        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">🖼️ Sección Galería</div>
-        <div class="campo">
-          <label>Título</label>
-          <input type="text" id="tx-galeria_titulo" placeholder="Momentos que quedan..." />
-        </div>
-        <div class="campo">
-          <label>Subtítulo</label>
-          <textarea id="tx-galeria_sub" rows="2"></textarea>
-        </div>
-
-        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">💬 Sección Testimonios</div>
-        <div class="campo">
-          <label>Título</label>
-          <input type="text" id="tx-testimonios_titulo" placeholder="Lo que dicen nuestras familias..." />
-        </div>
-        <div class="campo">
-          <label>Subtítulo</label>
-          <textarea id="tx-testimonios_sub" rows="2"></textarea>
-        </div>
-
-        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">📋 Sección Admisión</div>
-        <div class="campo">
-          <label>Título</label>
-          <input type="text" id="tx-admision_titulo" placeholder="4 pasos para unirte..." />
-        </div>
-        <div class="campo">
-          <label>Subtítulo</label>
-          <textarea id="tx-admision_sub" rows="2"></textarea>
-        </div>
-
-        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">❓ Sección Preguntas frecuentes</div>
-        <div class="campo">
-          <label>Título</label>
-          <input type="text" id="tx-faq_titulo" placeholder="Conoce Más sobre..." />
-        </div>
-        <div class="campo">
-          <label>Subtítulo</label>
-          <textarea id="tx-faq_sub" rows="2"></textarea>
-        </div>
-
-        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">📞 Sección Contacto</div>
-        <div class="campo">
-          <label>Título</label>
-          <input type="text" id="tx-contacto_titulo" placeholder="Estamos aquí para ayudarte..." />
-        </div>
-        <div class="campo">
-          <label>Subtítulo</label>
-          <textarea id="tx-contacto_sub" rows="2"></textarea>
-        </div>
-
-        <div class="guardar-wrap">
-          <button class="btn-guardar" onclick="guardar('textos')"><i class="fas fa-save"></i> Guardar cambios</button>
-          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
         </div>
       </div>
     </div>
@@ -652,6 +591,8 @@ async function cargarTodo() {
 function renderizarTodo() {
   // Contacto
   var c = datos.contacto || {};
+  setVal('c-titulo',   c.titulo);
+  setVal('c-sub',      c.sub);
   setVal('c-telefono', c.telefono);
   setVal('c-whatsapp', c.whatsapp);
   setVal('c-email',    c.email);
@@ -669,26 +610,35 @@ function renderizarTodo() {
   renderStats(h.stats || []);
 
   // Nosotros
+  setVal('n-titulo',      (datos.nosotros || {}).titulo);
   setVal('n-descripcion', (datos.nosotros || {}).descripcion);
 
   // FAQ
+  setVal('faq-titulo', (datos.faq || {}).titulo);
+  setVal('faq-sub',    (datos.faq || {}).sub);
   renderFaq((datos.faq || {}).lista || []);
 
   // Testimonios
+  setVal('t-titulo', (datos.testimonios || {}).titulo);
+  setVal('t-sub',    (datos.testimonios || {}).sub);
   renderTestimonios((datos.testimonios || {}).lista || []);
 
   // Documentos
   renderDocs((datos.documentos || {}).lista || []);
 
   // Galería
+  setVal('g-titulo', (datos.galeria || {}).titulo);
+  setVal('g-sub',    (datos.galeria || {}).sub);
   renderGaleria((datos.galeria || {}).lista || []);
 
   // Programas
+  setVal('p-titulo', (datos.programas || {}).titulo);
+  setVal('p-sub',    (datos.programas || {}).sub);
   renderProgramas((datos.programas || {}).lista || []);
 
-  // Textos
+  // Textos (solo secciones sin pestaña propia: actividades, horarios, admisión)
   var tx = datos.textos || {};
-  var txKeys = ['programas_titulo','programas_sub','nosotros_titulo','actividades_titulo','actividades_sub','horarios_titulo','horarios_sub','galeria_titulo','galeria_sub','testimonios_titulo','testimonios_sub','admision_titulo','admision_sub','faq_titulo','faq_sub','contacto_titulo','contacto_sub'];
+  var txKeys = ['actividades_titulo','actividades_sub','horarios_titulo','horarios_sub','admision_titulo','admision_sub'];
   txKeys.forEach(function(k) {
     var el = document.getElementById('tx-' + k);
     if (el && tx[k]) el.value = tx[k];
@@ -979,6 +929,8 @@ function mostrarSeccion(id, btn) {
 function recolectar(seccion) {
   if (seccion === 'contacto') {
     return {
+      titulo:    document.getElementById('c-titulo').value.trim(),
+      sub:       document.getElementById('c-sub').value.trim(),
       telefono:  document.getElementById('c-telefono').value.trim(),
       whatsapp:  document.getElementById('c-whatsapp').value.trim(),
       email:     document.getElementById('c-email').value.trim(),
@@ -1004,7 +956,10 @@ function recolectar(seccion) {
     };
   }
   if (seccion === 'nosotros') {
-    return { descripcion: document.getElementById('n-descripcion').value.trim() };
+    return {
+      titulo:      document.getElementById('n-titulo').value.trim(),
+      descripcion: document.getElementById('n-descripcion').value.trim(),
+    };
   }
   if (seccion === 'faq') {
     var lista = [...document.querySelectorAll('#faq-wrap .lista-item')].map(function(item){
@@ -1013,7 +968,11 @@ function recolectar(seccion) {
         respuesta: item.querySelector('.faq-respuesta').value.trim(),
       };
     });
-    return { lista };
+    return {
+      titulo: document.getElementById('faq-titulo').value.trim(),
+      sub:    document.getElementById('faq-sub').value.trim(),
+      lista,
+    };
   }
   if (seccion === 'testimonios') {
     var lista = [...document.querySelectorAll('#testimonios-wrap .lista-item')].map(function(item){
@@ -1025,7 +984,11 @@ function recolectar(seccion) {
         color:   item.querySelector('.t-color').value,
       };
     });
-    return { lista };
+    return {
+      titulo: document.getElementById('t-titulo').value.trim(),
+      sub:    document.getElementById('t-sub').value.trim(),
+      lista,
+    };
   }
   if (seccion === 'documentos') {
     var lista = [...document.querySelectorAll('#docs-wrap .lista-item')].map(function(item){
@@ -1045,10 +1008,14 @@ function recolectar(seccion) {
         clase: i === 0 ? 'span2' : 'normal',
       };
     });
-    return { lista };
+    return {
+      titulo: document.getElementById('g-titulo').value.trim(),
+      sub:    document.getElementById('g-sub').value.trim(),
+      lista,
+    };
   }
   if (seccion === 'textos') {
-    var txKeys = ['programas_titulo','programas_sub','nosotros_titulo','actividades_titulo','actividades_sub','horarios_titulo','horarios_sub','galeria_titulo','galeria_sub','testimonios_titulo','testimonios_sub','admision_titulo','admision_sub','faq_titulo','faq_sub','contacto_titulo','contacto_sub'];
+    var txKeys = ['actividades_titulo','actividades_sub','horarios_titulo','horarios_sub','admision_titulo','admision_sub'];
     var obj = {};
     txKeys.forEach(function(k) {
       var el = document.getElementById('tx-' + k);
@@ -1071,7 +1038,11 @@ function recolectar(seccion) {
         info3_label:  item.querySelector('.p-i3l').value.trim(),
       };
     });
-    return { lista };
+    return {
+      titulo: document.getElementById('p-titulo').value.trim(),
+      sub:    document.getElementById('p-sub').value.trim(),
+      lista,
+    };
   }
 }
 
