@@ -456,7 +456,7 @@
 //  ESTADO
 // ══════════════════════════════════════════════
 var datos = {};
-var pwd   = '';
+var pwd   = sessionStorage.getItem('panel_pwd') || '';
 
 // ══════════════════════════════════════════════
 //  LOGIN
@@ -483,6 +483,7 @@ async function login() {
   }
   // Contraseña OK
   pwd = p;
+  sessionStorage.setItem('panel_pwd', p);
   document.getElementById('login-error').style.display = 'none';
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('panel-screen').style.display  = 'block';
@@ -491,10 +492,29 @@ async function login() {
 
 function salir() {
   pwd = '';
+  sessionStorage.removeItem('panel_pwd');
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('panel-screen').style.display  = 'none';
   document.getElementById('password-input').value = '';
 }
+
+// Auto-login si hay sesión guardada
+(async function autoLogin() {
+  if (!pwd) return;
+  var res = await fetch('/.netlify/functions/guardar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password: pwd, seccion: '__ping__', contenido: {} })
+  });
+  if (res.status !== 401) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('panel-screen').style.display  = 'block';
+    await cargarTodo();
+  } else {
+    sessionStorage.removeItem('panel_pwd');
+    pwd = '';
+  }
+})();
 
 // ══════════════════════════════════════════════
 //  CARGAR DATOS DESDE LOS JSON
