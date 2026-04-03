@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel – IEI Jesús Maestro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #FF9B24; --teal: #00BBAE; --teal-dark: #009E92;
+      --navy: #222222; --gray: #484848; --border: #E8E8E8;
+      --cream: #F7F7F7; --white: #fff;
+      --green: #22C55E; --red: #EF4444;
+    }
+    body { font-family: 'Fredoka', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+    }
+    .login-box {
+      background: #fff; border-radius: 28px; padding: 48px 40px;
+      width: 100%; max-width: 400px; text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .login-logo {
+      width: 72px; height: 72px; background: var(--orange); border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin: 0 auto 20px; box-shadow: 0 8px 24px rgba(255,155,36,0.35);
+    }
+    .login-box h1 { font-size: 1.6rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .login-box p  { font-size: 0.92rem; color: var(--gray); margin-bottom: 28px; }
+    .login-box input {
+      width: 100%; padding: 14px 18px; border: 2px solid var(--border);
+      border-radius: 14px; font-size: 1rem; font-family: 'Fredoka', sans-serif;
+      outline: none; transition: border-color 0.2s; margin-bottom: 16px;
+    }
+    .login-box input:focus { border-color: var(--teal); }
+    .btn-login {
+      width: 100%; padding: 15px; background: var(--teal); color: #fff;
+      border: none; border-radius: 14px; font-size: 1.05rem; font-weight: 600;
+      font-family: 'Fredoka', sans-serif; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-login:hover { background: var(--teal-dark); transform: translateY(-2px); }
+    .login-error {
+      background: #FEE2E2; color: var(--red); padding: 10px 16px;
+      border-radius: 10px; font-size: 0.9rem; margin-bottom: 16px; display: none;
+    }
+
+    /* ── PANEL ── */
+    #panel-screen { display: none; }
+
+    .topbar {
+      background: #fff; padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .topbar-logo {
+      width: 44px; height: 44px; background: var(--orange); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff;
+    }
+    .topbar h2 { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+    .topbar span { font-size: 0.8rem; color: var(--gray); display: block; }
+    .btn-salir {
+      background: var(--cream); border: 1.5px solid var(--border);
+      color: var(--gray); padding: 8px 20px; border-radius: 50px;
+      font-family: 'Fredoka', sans-serif; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-salir:hover { background: #fee2e2; color: var(--red); border-color: #fca5a5; }
+
+    .panel-body { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+    .panel-intro { margin-bottom: 36px; }
+    .panel-intro h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+    .panel-intro p  { color: var(--gray); font-size: 0.95rem; }
+
+    /* ── TABS ── */
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+    .tab-btn {
+      padding: 10px 20px; border-radius: 50px; border: 2px solid var(--border);
+      background: #fff; font-family: 'Fredoka', sans-serif; font-size: 0.9rem;
+      font-weight: 600; color: var(--gray); cursor: pointer; transition: all 0.2s;
+    }
+    .tab-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .tab-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+    /* ── SECCIÓN CARD ── */
+    .seccion { display: none; }
+    .seccion.activa { display: block; }
+    .seccion-card {
+      background: #fff; border-radius: 24px; padding: 36px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06); border: 1px solid var(--border);
+    }
+    .seccion-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    .seccion-icon {
+      width: 52px; height: 52px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    }
+    .seccion-icon.orange { background: rgba(255,155,36,0.12); color: var(--orange); }
+    .seccion-icon.teal   { background: rgba(0,187,174,0.12);  color: var(--teal); }
+    .seccion-icon.purple { background: rgba(168,85,247,0.12); color: #A855F7; }
+    .seccion-icon.blue   { background: rgba(59,130,246,0.12); color: #3B82F6; }
+    .seccion-icon.green  { background: rgba(34,197,94,0.12);  color: var(--green); }
+    .seccion-icon.pink   { background: rgba(255,87,123,0.12); color: #FF577B; }
+    .seccion-title { font-size: 1.3rem; font-weight: 700; }
+    .seccion-sub   { font-size: 0.85rem; color: var(--gray); margin-top: 2px; }
+
+    /* ── CAMPOS ── */
+    .campo { margin-bottom: 22px; }
+    .campo label {
+      display: block; font-weight: 700; font-size: 0.88rem; color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .campo label .hint {
+      font-weight: 400; color: var(--gray); font-size: 0.8rem; margin-left: 6px;
+    }
+    .campo input, .campo textarea {
+      width: 100%; padding: 13px 16px; border: 2px solid var(--border);
+      border-radius: 12px; font-size: 0.97rem; font-family: 'Fredoka', sans-serif;
+      outline: none; transition: border-color 0.2s; color: var(--navy);
+      background: #fff;
+    }
+    .campo input:focus, .campo textarea:focus { border-color: var(--teal); }
+    .campo textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+    /* ── LISTA ITEMS ── */
+    .lista-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .lista-item {
+      border: 1.5px solid var(--border); border-radius: 16px; padding: 18px 20px;
+      position: relative; background: #fafafa; transition: border-color 0.2s;
+    }
+    .lista-item:hover { border-color: var(--teal); }
+    .lista-item-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .lista-num {
+      width: 28px; height: 28px; border-radius: 50%; background: var(--teal);
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0;
+    }
+    .btn-eliminar {
+      background: #fee2e2; color: var(--red); border: none;
+      border-radius: 8px; padding: 5px 12px; font-size: 0.8rem;
+      font-family: 'Fredoka', sans-serif; font-weight: 600; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-eliminar:hover { background: var(--red); color: #fff; }
+    .lista-item .campo { margin-bottom: 12px; }
+    .lista-item .campo:last-child { margin-bottom: 0; }
+    .campo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .btn-agregar {
+      display: flex; align-items: center; gap: 8px; padding: 12px 22px;
+      background: rgba(0,187,174,0.08); color: var(--teal); border: 2px dashed rgba(0,187,174,0.35);
+      border-radius: 14px; font-family: 'Fredoka', sans-serif; font-size: 0.95rem;
+      font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; justify-content: center;
+      margin-top: 8px;
+    }
+    .btn-agregar:hover { background: rgba(0,187,174,0.15); border-color: var(--teal); }
+
+    /* ── GUARDAR ── */
+    .guardar-wrap { margin-top: 32px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .btn-guardar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 15px 36px; background: var(--orange); color: #fff;
+      border: none; border-radius: 50px; font-family: 'Fredoka', sans-serif;
+      font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: all 0.25s;
+      box-shadow: 0 6px 20px rgba(255,155,36,0.35);
+    }
+    .btn-guardar:hover { background: #e88a1a; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(255,155,36,0.4); }
+    .btn-guardar:disabled { background: #ccc; box-shadow: none; transform: none; cursor: not-allowed; }
+    .btn-ver-sitio {
+      display: flex; align-items: center; gap: 8px;
+      padding: 15px 28px; background: #fff; color: var(--navy);
+      border: 2px solid var(--border); border-radius: 50px;
+      font-family: 'Fredoka', sans-serif; font-size: 1rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all 0.2s;
+    }
+    .btn-ver-sitio:hover { border-color: var(--navy); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--navy); color: #fff; padding: 14px 28px; border-radius: 50px;
+      font-size: 0.97rem; font-weight: 600; box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); z-index: 9999;
+      display: flex; align-items: center; gap: 10px; white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.ok   { background: var(--green); }
+    .toast.err  { background: var(--red); }
+
+    /* ── SELECT color ── */
+    .campo select {
+      width: 100%; padding: 13px 16px; border: 2px solid var(--border);
+      border-radius: 12px; font-size: 0.97rem; font-family: 'Fredoka', sans-serif;
+      outline: none; transition: border-color 0.2s; color: var(--navy);
+      background: #fff; cursor: pointer;
+    }
+    .campo select:focus { border-color: var(--teal); }
+
+    /* ── Spinner ── */
+    .spinner { display: inline-block; width: 18px; height: 18px; border: 3px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 600px) {
+      .topbar { padding: 14px 16px; }
+      .panel-body { padding: 24px 16px 60px; }
+      .seccion-card { padding: 24px 20px; }
+      .campo-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN ══════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">🏫</div>
+    <h1>IEI Jesús Maestro</h1>
+    <p>Panel de administración del sitio web</p>
+    <div class="login-error" id="login-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
+    <input type="password" id="password-input" placeholder="Contraseña" />
+    <button class="btn-login" onclick="login()">Entrar al panel</button>
+  </div>
+</div>
+
+<!-- ══════════ PANEL ══════════ -->
+<div id="panel-screen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">🏫</div>
+      <div>
+        <h2>Panel de administración</h2>
+        <span>IEI Jesús Maestro</span>
+      </div>
+    </div>
+    <button class="btn-salir" onclick="salir()"><i class="fas fa-sign-out-alt"></i> Salir</button>
+  </div>
+
+  <div class="panel-body">
+    <div class="panel-intro">
+      <h3>¿Qué deseas editar hoy? ✏️</h3>
+      <p>Elige una sección, realiza los cambios y haz clic en "Guardar cambios". Tu sitio se actualizará en menos de un minuto.</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="mostrarSeccion('contacto', this)">📞 Contacto</button>
+      <button class="tab-btn" onclick="mostrarSeccion('hero', this)">🏠 Inicio</button>
+      <button class="tab-btn" onclick="mostrarSeccion('nosotros', this)">📖 Nosotros</button>
+      <button class="tab-btn" onclick="mostrarSeccion('faq', this)">❓ Preguntas</button>
+      <button class="tab-btn" onclick="mostrarSeccion('testimonios', this)">💬 Testimonios</button>
+      <button class="tab-btn" onclick="mostrarSeccion('documentos', this)">📄 Documentos</button>
+      <button class="tab-btn" onclick="mostrarSeccion('galeria', this)">🖼️ Galería</button>
+    </div>
+
+    <!-- ── CONTACTO ── -->
+    <div class="seccion activa" id="sec-contacto">
+      <div class="seccion-card">
+        <div class="seccion-header">
+          <div class="seccion-icon teal"><i class="fas fa-phone"></i></div>
+          <div>
+            <div class="seccion-title">Datos de contacto</div>
+            <div class="seccion-sub">Teléfono, correo, horario y redes sociales</div>
+          </div>
+        </div>
+        <div class="campo">
+          <label>📞 Teléfono <span class="hint">El número que aparece en el encabezado y pie de página</span></label>
+          <input type="text" id="c-telefono" placeholder="Ej: 952 568 995" />
+        </div>
+        <div class="campo">
+          <label>💬 WhatsApp <span class="hint">Solo el número con código de país, sin espacios ni +</span></label>
+          <input type="text" id="c-whatsapp" placeholder="Ej: 51952568995" />
+        </div>
+        <div class="campo">
+          <label>✉️ Correo electrónico</label>
+          <input type="email" id="c-email" placeholder="Ej: ieijesusmaestro@hotmail.com" />
+        </div>
+        <div class="campo">
+          <label>🕐 Horario de atención</label>
+          <input type="text" id="c-horario" placeholder="Ej: Lun – Vie: 8:00 AM – 1:15 PM" />
+        </div>
+        <div class="campo">
+          <label>📍 Dirección</label>
+          <input type="text" id="c-direccion" placeholder="Ej: Jr. Carhuarazo Mz. G Lt. 3, Chorrillos" />
+        </div>
+        <div class="campo">
+          <label>👍 Enlace de Facebook</label>
+          <input type="url" id="c-facebook" placeholder="https://www.facebook.com/..." />
+        </div>
+        <div class="guardar-wrap">
+          <button class="btn-guardar" onclick="guardar('contacto')"><i class="fas fa-save"></i> Guardar cambios</button>
+          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HERO ── -->
+    <div class="seccion" id="sec-hero">
+      <div class="seccion-card">
+        <div class="seccion-header">
+          <div class="seccion-icon orange"><i class="fas fa-home"></i></div>
+          <div>
+            <div class="seccion-title">Sección de inicio</div>
+            <div class="seccion-sub">El primer texto que ven los visitantes al entrar al sitio</div>
+          </div>
+        </div>
+        <div class="campo">
+          <label>📝 Descripción principal</label>
+          <textarea id="h-descripcion" rows="4" placeholder="Ej: En IEI Jesús Maestro formamos niños y niñas felices..."></textarea>
+        </div>
+        <div class="campo">
+          <label>📊 Estadísticas <span class="hint">Los tres números que destacan debajo del texto</span></label>
+          <div class="lista-wrap" id="h-stats-wrap"></div>
+        </div>
+        <div class="guardar-wrap">
+          <button class="btn-guardar" onclick="guardar('hero')"><i class="fas fa-save"></i> Guardar cambios</button>
+          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NOSOTROS ── -->
+    <div class="seccion" id="sec-nosotros">
+      <div class="seccion-card">
+        <div class="seccion-header">
+          <div class="seccion-icon purple"><i class="fas fa-heart"></i></div>
+          <div>
+            <div class="seccion-title">Sección Nosotros</div>
+            <div class="seccion-sub">El párrafo que describe la misión del colegio</div>
+          </div>
+        </div>
+        <div class="campo">
+          <label>📝 Descripción de la institución</label>
+          <textarea id="n-descripcion" rows="6" placeholder="Nuestra misión es..."></textarea>
+        </div>
+        <div class="guardar-wrap">
+          <button class="btn-guardar" onclick="guardar('nosotros')"><i class="fas fa-save"></i> Guardar cambios</button>
+          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app#nosotros" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FAQ ── -->
+    <div class="seccion" id="sec-faq">
+      <div class="seccion-card">
+        <div class="seccion-header">
+          <div class="seccion-icon blue"><i class="fas fa-question-circle"></i></div>
+          <div>
+            <div class="seccion-title">Preguntas frecuentes</div>
+            <div class="seccion-sub">Agrega, edita o elimina las preguntas que hacen los padres</div>
+          </div>
+        </div>
+        <div class="lista-wrap" id="faq-wrap"></div>
+        <button class="btn-agregar" onclick="agregarFaq()"><i class="fas fa-plus"></i> Agregar nueva pregunta</button>
+        <div class="guardar-wrap">
+          <button class="btn-guardar" onclick="guardar('faq')"><i class="fas fa-save"></i> Guardar cambios</button>
+          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app#faq" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TESTIMONIOS ── -->
+    <div class="seccion" id="sec-testimonios">
+      <div class="seccion-card">
+        <div class="seccion-header">
+          <div class="seccion-icon orange"><i class="fas fa-comments"></i></div>
+          <div>
+            <div class="seccion-title">Testimonios de padres</div>
+            <div class="seccion-sub">Lo que dicen las familias del colegio</div>
+          </div>
+        </div>
+        <div class="lista-wrap" id="testimonios-wrap"></div>
+        <button class="btn-agregar" onclick="agregarTestimonio()"><i class="fas fa-plus"></i> Agregar testimonio</button>
+        <div class="guardar-wrap">
+          <button class="btn-guardar" onclick="guardar('testimonios')"><i class="fas fa-save"></i> Guardar cambios</button>
+          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app#testimonios" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DOCUMENTOS ── -->
+    <div class="seccion" id="sec-documentos">
+      <div class="seccion-card">
+        <div class="seccion-header">
+          <div class="seccion-icon green"><i class="fas fa-file-pdf"></i></div>
+          <div>
+            <div class="seccion-title">Documentos</div>
+            <div class="seccion-sub">Los archivos y documentos disponibles para descargar</div>
+          </div>
+        </div>
+        <div class="lista-wrap" id="docs-wrap"></div>
+        <button class="btn-agregar" onclick="agregarDocumento()"><i class="fas fa-plus"></i> Agregar documento</button>
+        <div class="guardar-wrap">
+          <button class="btn-guardar" onclick="guardar('documentos')"><i class="fas fa-save"></i> Guardar cambios</button>
+          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app#documentos" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── GALERÍA ── -->
+    <div class="seccion" id="sec-galeria">
+      <div class="seccion-card">
+        <div class="seccion-header">
+          <div class="seccion-icon pink"><i class="fas fa-images"></i></div>
+          <div>
+            <div class="seccion-title">Galería de fotos</div>
+            <div class="seccion-sub">Las imágenes que se muestran en el sitio (pega el enlace de la foto)</div>
+          </div>
+        </div>
+        <div class="lista-wrap" id="galeria-wrap"></div>
+        <button class="btn-agregar" onclick="agregarFoto()"><i class="fas fa-plus"></i> Agregar foto</button>
+        <div class="guardar-wrap">
+          <button class="btn-guardar" onclick="guardar('galeria')"><i class="fas fa-save"></i> Guardar cambios</button>
+          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app#galeria" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /panel-body -->
+</div><!-- /panel-screen -->
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  ESTADO
+// ══════════════════════════════════════════════
+var datos = {};
+var pwd   = '';
+
+// ══════════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════════
+document.getElementById('password-input').addEventListener('keydown', function(e){
+  if (e.key === 'Enter') login();
+});
+
+async function login() {
+  var p = document.getElementById('password-input').value.trim();
+  if (!p) return;
+  // Verificar con el servidor
+  var res = await fetch('/.netlify/functions/guardar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password: p, seccion: '__ping__', contenido: {} })
+  });
+  // Si el servidor dice 401 la contraseña es incorrecta
+  // Si dice 400 (seccion inválida) la contraseña ES correcta
+  var json = await res.json();
+  if (res.status === 401) {
+    document.getElementById('login-error').style.display = 'block';
+    return;
+  }
+  // Contraseña OK
+  pwd = p;
+  document.getElementById('login-error').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('panel-screen').style.display  = 'block';
+  await cargarTodo();
+}
+
+function salir() {
+  pwd = '';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('panel-screen').style.display  = 'none';
+  document.getElementById('password-input').value = '';
+}
+
+// ══════════════════════════════════════════════
+//  CARGAR DATOS DESDE LOS JSON
+// ══════════════════════════════════════════════
+async function cargarTodo() {
+  var secciones = ['contacto','hero','nosotros','faq','testimonios','documentos','galeria'];
+  await Promise.all(secciones.map(async function(s) {
+    var r = await fetch('/content/' + s + '.json?t=' + Date.now());
+    datos[s] = await r.json();
+  }));
+  renderizarTodo();
+}
+
+function renderizarTodo() {
+  // Contacto
+  var c = datos.contacto || {};
+  setVal('c-telefono', c.telefono);
+  setVal('c-whatsapp', c.whatsapp);
+  setVal('c-email',    c.email);
+  setVal('c-horario',  c.horario);
+  setVal('c-direccion',c.direccion);
+  setVal('c-facebook', c.facebook);
+
+  // Hero
+  var h = datos.hero || {};
+  setVal('h-descripcion', h.descripcion);
+  renderStats(h.stats || []);
+
+  // Nosotros
+  setVal('n-descripcion', (datos.nosotros || {}).descripcion);
+
+  // FAQ
+  renderFaq((datos.faq || {}).lista || []);
+
+  // Testimonios
+  renderTestimonios((datos.testimonios || {}).lista || []);
+
+  // Documentos
+  renderDocs((datos.documentos || {}).lista || []);
+
+  // Galería
+  renderGaleria((datos.galeria || {}).lista || []);
+}
+
+function setVal(id, val) {
+  var el = document.getElementById(id);
+  if (el && val !== undefined) el.value = val;
+}
+
+// ── Stats ──
+function renderStats(lista) {
+  var wrap = document.getElementById('h-stats-wrap');
+  wrap.innerHTML = '';
+  lista.forEach(function(s, i) {
+    wrap.appendChild(crearStatItem(s, i));
+  });
+}
+function crearStatItem(s, i) {
+  var div = document.createElement('div');
+  div.className = 'lista-item';
+  div.innerHTML = `
+    <div class="lista-item-header">
+      <div class="lista-num">${i+1}</div>
+    </div>
+    <div class="campo-row">
+      <div class="campo">
+        <label>Valor <span class="hint">Ej: 20+</span></label>
+        <input type="text" class="stat-valor" value="${esc(s.valor)}" placeholder="20+" />
+      </div>
+      <div class="campo">
+        <label>Descripción <span class="hint">Ej: Años de experiencia</span></label>
+        <input type="text" class="stat-label" value="${esc(s.label)}" placeholder="Años de experiencia" />
+      </div>
+    </div>`;
+  return div;
+}
+
+// ── FAQ ──
+function renderFaq(lista) {
+  var wrap = document.getElementById('faq-wrap');
+  wrap.innerHTML = '';
+  lista.forEach(function(f, i) { wrap.appendChild(crearFaqItem(f, i)); });
+}
+function crearFaqItem(f, i) {
+  var div = document.createElement('div');
+  div.className = 'lista-item';
+  div.innerHTML = `
+    <div class="lista-item-header">
+      <div class="lista-num">${i+1}</div>
+      <button class="btn-eliminar" onclick="eliminarItem('faq-wrap', this)">✕ Eliminar</button>
+    </div>
+    <div class="campo">
+      <label>Pregunta</label>
+      <input type="text" class="faq-pregunta" value="${esc(f.pregunta)}" placeholder="¿Cuál es la edad mínima de ingreso?" />
+    </div>
+    <div class="campo">
+      <label>Respuesta</label>
+      <textarea class="faq-respuesta" rows="3" placeholder="Escribe la respuesta aquí...">${esc(f.respuesta)}</textarea>
+    </div>`;
+  return div;
+}
+function agregarFaq() {
+  var wrap = document.getElementById('faq-wrap');
+  var n = wrap.children.length;
+  wrap.appendChild(crearFaqItem({pregunta:'',respuesta:''}, n));
+  renumerarItems('faq-wrap');
+}
+
+// ── Testimonios ──
+function renderTestimonios(lista) {
+  var wrap = document.getElementById('testimonios-wrap');
+  wrap.innerHTML = '';
+  lista.forEach(function(t, i) { wrap.appendChild(crearTestimonioItem(t, i)); });
+}
+function crearTestimonioItem(t, i) {
+  var colores = ['orange','teal','purple','blue','green','pink'];
+  var div = document.createElement('div');
+  div.className = 'lista-item';
+  div.innerHTML = `
+    <div class="lista-item-header">
+      <div class="lista-num">${i+1}</div>
+      <button class="btn-eliminar" onclick="eliminarItem('testimonios-wrap', this)">✕ Eliminar</button>
+    </div>
+    <div class="campo">
+      <label>💬 Comentario del padre / madre</label>
+      <textarea class="t-texto" rows="3" placeholder="Escribe el testimonio aquí...">${esc(t.texto)}</textarea>
+    </div>
+    <div class="campo-row">
+      <div class="campo">
+        <label>👤 Nombre</label>
+        <input type="text" class="t-nombre" value="${esc(t.nombre)}" placeholder="Ej: María García" />
+      </div>
+      <div class="campo">
+        <label>📌 Rol <span class="hint">Ej: Mamá de Lucía</span></label>
+        <input type="text" class="t-rol" value="${esc(t.rol)}" placeholder="Mamá de Lucía, 4 años" />
+      </div>
+    </div>
+    <div class="campo-row">
+      <div class="campo">
+        <label>🔤 Inicial del avatar <span class="hint">Una letra</span></label>
+        <input type="text" class="t-inicial" maxlength="1" value="${esc(t.inicial)}" placeholder="M" />
+      </div>
+      <div class="campo">
+        <label>🎨 Color del avatar</label>
+        <select class="t-color">
+          ${colores.map(function(c){ return `<option value="${c}" ${t.color===c?'selected':''}>${c}</option>`; }).join('')}
+        </select>
+      </div>
+    </div>`;
+  return div;
+}
+function agregarTestimonio() {
+  var wrap = document.getElementById('testimonios-wrap');
+  var n = wrap.children.length;
+  wrap.appendChild(crearTestimonioItem({texto:'',nombre:'',rol:'',inicial:'',color:'teal'}, n));
+  renumerarItems('testimonios-wrap');
+}
+
+// ── Documentos ──
+function renderDocs(lista) {
+  var wrap = document.getElementById('docs-wrap');
+  wrap.innerHTML = '';
+  lista.forEach(function(d, i) { wrap.appendChild(crearDocItem(d, i)); });
+}
+function crearDocItem(d, i) {
+  var div = document.createElement('div');
+  div.className = 'lista-item';
+  div.innerHTML = `
+    <div class="lista-item-header">
+      <div class="lista-num">${i+1}</div>
+      <button class="btn-eliminar" onclick="eliminarItem('docs-wrap', this)">✕ Eliminar</button>
+    </div>
+    <div class="campo">
+      <label>📄 Nombre del documento</label>
+      <input type="text" class="d-nombre" value="${esc(d.nombre)}" placeholder="Ej: Reglamento interno" />
+    </div>
+    <div class="campo">
+      <label>🔗 Enlace del documento <span class="hint">La URL donde está el PDF</span></label>
+      <input type="url" class="d-url" value="${esc(d.url)}" placeholder="https://..." />
+    </div>`;
+  return div;
+}
+function agregarDocumento() {
+  var wrap = document.getElementById('docs-wrap');
+  var n = wrap.children.length;
+  wrap.appendChild(crearDocItem({nombre:'',url:''}, n));
+  renumerarItems('docs-wrap');
+}
+
+// ── Galería ──
+function renderGaleria(lista) {
+  var wrap = document.getElementById('galeria-wrap');
+  wrap.innerHTML = '';
+  lista.forEach(function(g, i) { wrap.appendChild(crearGaleriaItem(g, i)); });
+}
+function crearGaleriaItem(g, i) {
+  var div = document.createElement('div');
+  div.className = 'lista-item';
+  div.innerHTML = `
+    <div class="lista-item-header">
+      <div class="lista-num">${i+1}</div>
+      <button class="btn-eliminar" onclick="eliminarItem('galeria-wrap', this)">✕ Eliminar</button>
+    </div>
+    <div class="campo">
+      <label>🖼️ Enlace de la foto <span class="hint">Pega aquí la URL de la imagen</span></label>
+      <input type="url" class="g-src" value="${esc(g.src)}" placeholder="https://..." />
+    </div>
+    <div class="campo-row">
+      <div class="campo">
+        <label>📝 Etiqueta <span class="hint">Texto sobre la foto</span></label>
+        <input type="text" class="g-label" value="${esc(g.label)}" placeholder="Actividad grupal" />
+      </div>
+      <div class="campo">
+        <label>♿ Descripción de la foto <span class="hint">Para accesibilidad</span></label>
+        <input type="text" class="g-alt" value="${esc(g.alt)}" placeholder="Niños pintando" />
+      </div>
+    </div>`;
+  return div;
+}
+function agregarFoto() {
+  var wrap = document.getElementById('galeria-wrap');
+  var n = wrap.children.length;
+  wrap.appendChild(crearGaleriaItem({src:'',label:'',alt:'',clase:'normal'}, n));
+  renumerarItems('galeria-wrap');
+}
+
+// ══════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════
+function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function eliminarItem(wrapId, btn) {
+  btn.closest('.lista-item').remove();
+  renumerarItems(wrapId);
+}
+function renumerarItems(wrapId) {
+  var items = document.querySelectorAll('#' + wrapId + ' .lista-num');
+  items.forEach(function(el, i) { el.textContent = i+1; });
+}
+
+function mostrarSeccion(id, btn) {
+  document.querySelectorAll('.seccion').forEach(function(s){ s.classList.remove('activa'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('sec-' + id).classList.add('activa');
+  btn.classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+//  RECOLECTAR DATOS DEL FORMULARIO
+// ══════════════════════════════════════════════
+function recolectar(seccion) {
+  if (seccion === 'contacto') {
+    return {
+      telefono:  document.getElementById('c-telefono').value.trim(),
+      whatsapp:  document.getElementById('c-whatsapp').value.trim(),
+      email:     document.getElementById('c-email').value.trim(),
+      horario:   document.getElementById('c-horario').value.trim(),
+      direccion: document.getElementById('c-direccion').value.trim(),
+      facebook:  document.getElementById('c-facebook').value.trim(),
+    };
+  }
+  if (seccion === 'hero') {
+    var stats = [...document.querySelectorAll('#h-stats-wrap .lista-item')].map(function(item){
+      return {
+        valor: item.querySelector('.stat-valor').value.trim(),
+        label: item.querySelector('.stat-label').value.trim(),
+      };
+    });
+    return { descripcion: document.getElementById('h-descripcion').value.trim(), stats };
+  }
+  if (seccion === 'nosotros') {
+    return { descripcion: document.getElementById('n-descripcion').value.trim() };
+  }
+  if (seccion === 'faq') {
+    var lista = [...document.querySelectorAll('#faq-wrap .lista-item')].map(function(item){
+      return {
+        pregunta:  item.querySelector('.faq-pregunta').value.trim(),
+        respuesta: item.querySelector('.faq-respuesta').value.trim(),
+      };
+    });
+    return { lista };
+  }
+  if (seccion === 'testimonios') {
+    var lista = [...document.querySelectorAll('#testimonios-wrap .lista-item')].map(function(item){
+      return {
+        texto:   item.querySelector('.t-texto').value.trim(),
+        nombre:  item.querySelector('.t-nombre').value.trim(),
+        rol:     item.querySelector('.t-rol').value.trim(),
+        inicial: item.querySelector('.t-inicial').value.trim(),
+        color:   item.querySelector('.t-color').value,
+      };
+    });
+    return { lista };
+  }
+  if (seccion === 'documentos') {
+    var lista = [...document.querySelectorAll('#docs-wrap .lista-item')].map(function(item){
+      return {
+        nombre: item.querySelector('.d-nombre').value.trim(),
+        url:    item.querySelector('.d-url').value.trim(),
+      };
+    });
+    return { lista };
+  }
+  if (seccion === 'galeria') {
+    var lista = [...document.querySelectorAll('#galeria-wrap .lista-item')].map(function(item, i){
+      return {
+        src:   item.querySelector('.g-src').value.trim(),
+        label: item.querySelector('.g-label').value.trim(),
+        alt:   item.querySelector('.g-alt').value.trim(),
+        clase: i === 0 ? 'span2' : 'normal',
+      };
+    });
+    return { lista };
+  }
+}
+
+// ══════════════════════════════════════════════
+//  GUARDAR
+// ══════════════════════════════════════════════
+async function guardar(seccion) {
+  var contenido = recolectar(seccion);
+  var btns = document.querySelectorAll('#sec-' + seccion + ' .btn-guardar');
+  btns.forEach(function(b){
+    b.disabled = true;
+    b.innerHTML = '<span class="spinner"></span> Guardando...';
+  });
+
+  try {
+    var res = await fetch('/.netlify/functions/guardar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd, seccion, contenido }),
+    });
+    var json = await res.json();
+    if (json.ok) {
+      datos[seccion] = contenido;
+      mostrarToast('✅ ¡Cambios guardados! El sitio se actualiza en ~1 minuto.', 'ok');
+    } else {
+      mostrarToast('❌ Error: ' + json.error, 'err');
+    }
+  } catch(e) {
+    mostrarToast('❌ Sin conexión. Inténtalo de nuevo.', 'err');
+  }
+
+  btns.forEach(function(b){
+    b.disabled = false;
+    b.innerHTML = '<i class="fas fa-save"></i> Guardar cambios';
+  });
+}
+
+// ══════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════
+var toastTimer;
+function mostrarToast(msg, tipo) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (tipo||'');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 4000);
+}
+</script>
+</body>
+</html>
