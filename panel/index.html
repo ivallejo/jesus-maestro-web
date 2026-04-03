@@ -261,6 +261,7 @@
       <button class="tab-btn" onclick="mostrarSeccion('documentos', this)">📄 Documentos</button>
       <button class="tab-btn" onclick="mostrarSeccion('galeria', this)">🖼️ Galería</button>
       <button class="tab-btn" onclick="mostrarSeccion('programas', this)">📚 Programas</button>
+      <button class="tab-btn" onclick="mostrarSeccion('textos', this)">✏️ Títulos</button>
     </div>
 
     <!-- ── CONTACTO ── -->
@@ -445,6 +446,110 @@
       </div>
     </div>
 
+    <!-- ── TEXTOS ── -->
+    <div class="seccion" id="sec-textos">
+      <div class="seccion-card">
+        <div class="seccion-header">
+          <div class="seccion-icon teal"><i class="fas fa-heading"></i></div>
+          <div>
+            <div class="seccion-title">Títulos y subtítulos</div>
+            <div class="seccion-sub">Los encabezados que aparecen en cada sección del sitio</div>
+          </div>
+        </div>
+
+        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:16px;">📚 Sección Programas</div>
+        <div class="campo">
+          <label>Título</label>
+          <input type="text" id="tx-programas_titulo" placeholder="Educación por edades..." />
+        </div>
+        <div class="campo">
+          <label>Subtítulo</label>
+          <textarea id="tx-programas_sub" rows="2"></textarea>
+        </div>
+
+        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">📖 Sección Nosotros</div>
+        <div class="campo">
+          <label>Título</label>
+          <input type="text" id="tx-nosotros_titulo" placeholder="Una familia dedicada..." />
+        </div>
+
+        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">🎨 Sección Actividades</div>
+        <div class="campo">
+          <label>Título</label>
+          <input type="text" id="tx-actividades_titulo" placeholder="Aprendemos jugando..." />
+        </div>
+        <div class="campo">
+          <label>Subtítulo</label>
+          <textarea id="tx-actividades_sub" rows="2"></textarea>
+        </div>
+
+        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">🕐 Sección Horarios</div>
+        <div class="campo">
+          <label>Título</label>
+          <input type="text" id="tx-horarios_titulo" placeholder="Organizamos el día..." />
+        </div>
+        <div class="campo">
+          <label>Subtítulo</label>
+          <textarea id="tx-horarios_sub" rows="2"></textarea>
+        </div>
+
+        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">🖼️ Sección Galería</div>
+        <div class="campo">
+          <label>Título</label>
+          <input type="text" id="tx-galeria_titulo" placeholder="Momentos que quedan..." />
+        </div>
+        <div class="campo">
+          <label>Subtítulo</label>
+          <textarea id="tx-galeria_sub" rows="2"></textarea>
+        </div>
+
+        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">💬 Sección Testimonios</div>
+        <div class="campo">
+          <label>Título</label>
+          <input type="text" id="tx-testimonios_titulo" placeholder="Lo que dicen nuestras familias..." />
+        </div>
+        <div class="campo">
+          <label>Subtítulo</label>
+          <textarea id="tx-testimonios_sub" rows="2"></textarea>
+        </div>
+
+        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">📋 Sección Admisión</div>
+        <div class="campo">
+          <label>Título</label>
+          <input type="text" id="tx-admision_titulo" placeholder="4 pasos para unirte..." />
+        </div>
+        <div class="campo">
+          <label>Subtítulo</label>
+          <textarea id="tx-admision_sub" rows="2"></textarea>
+        </div>
+
+        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">❓ Sección Preguntas frecuentes</div>
+        <div class="campo">
+          <label>Título</label>
+          <input type="text" id="tx-faq_titulo" placeholder="Conoce Más sobre..." />
+        </div>
+        <div class="campo">
+          <label>Subtítulo</label>
+          <textarea id="tx-faq_sub" rows="2"></textarea>
+        </div>
+
+        <div style="font-weight:700; font-size:0.8rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.5px; margin:24px 0 16px;">📞 Sección Contacto</div>
+        <div class="campo">
+          <label>Título</label>
+          <input type="text" id="tx-contacto_titulo" placeholder="Estamos aquí para ayudarte..." />
+        </div>
+        <div class="campo">
+          <label>Subtítulo</label>
+          <textarea id="tx-contacto_sub" rows="2"></textarea>
+        </div>
+
+        <div class="guardar-wrap">
+          <button class="btn-guardar" onclick="guardar('textos')"><i class="fas fa-save"></i> Guardar cambios</button>
+          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /panel-body -->
 </div><!-- /panel-screen -->
 
@@ -520,7 +625,7 @@ function salir() {
 //  CARGAR DATOS DESDE LOS JSON
 // ══════════════════════════════════════════════
 async function cargarTodo() {
-  var secciones = ['contacto','hero','nosotros','faq','testimonios','documentos','galeria','programas'];
+  var secciones = ['contacto','hero','nosotros','faq','testimonios','documentos','galeria','programas','textos'];
   await Promise.all(secciones.map(async function(s) {
     var r = await fetch('/content/' + s + '.json?t=' + Date.now());
     datos[s] = await r.json();
@@ -560,6 +665,14 @@ function renderizarTodo() {
 
   // Programas
   renderProgramas((datos.programas || {}).lista || []);
+
+  // Textos
+  var tx = datos.textos || {};
+  var txKeys = ['programas_titulo','programas_sub','nosotros_titulo','actividades_titulo','actividades_sub','horarios_titulo','horarios_sub','galeria_titulo','galeria_sub','testimonios_titulo','testimonios_sub','admision_titulo','admision_sub','faq_titulo','faq_sub','contacto_titulo','contacto_sub'];
+  txKeys.forEach(function(k) {
+    var el = document.getElementById('tx-' + k);
+    if (el && tx[k]) el.value = tx[k];
+  });
 }
 
 function setVal(id, val) {
@@ -903,6 +1016,15 @@ function recolectar(seccion) {
       };
     });
     return { lista };
+  }
+  if (seccion === 'textos') {
+    var txKeys = ['programas_titulo','programas_sub','nosotros_titulo','actividades_titulo','actividades_sub','horarios_titulo','horarios_sub','galeria_titulo','galeria_sub','testimonios_titulo','testimonios_sub','admision_titulo','admision_sub','faq_titulo','faq_sub','contacto_titulo','contacto_sub'];
+    var obj = {};
+    txKeys.forEach(function(k) {
+      var el = document.getElementById('tx-' + k);
+      if (el) obj[k] = el.value.trim();
+    });
+    return obj;
   }
   if (seccion === 'programas') {
     var lista = [...document.querySelectorAll('#programas-wrap .lista-item')].map(function(item){

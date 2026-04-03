@@ -4,7 +4,7 @@
  * Si los archivos no están disponibles, el HTML estático sigue funcionando.
  */
 (async function initCMS() {
-  const sections = ['contacto','hero','nosotros','testimonios','documentos','faq','galeria','programas'];
+  const sections = ['contacto','hero','nosotros','testimonios','documentos','faq','galeria','programas','textos'];
   const data = {};
 
   await Promise.all(sections.map(async (s) => {
@@ -22,6 +22,7 @@
   applyFaq(data.faq);
   applyGaleria(data.galeria);
   applyProgramas(data.programas);
+  applyTextos(data.textos);
 })();
 
 /* ── Contacto ─────────────────────────────────────────────────────── */
@@ -144,6 +145,18 @@ function applyProgramas(p) {
         </div>
       </div>
     </div>`).join('');
+}
+
+/* ── Textos (títulos y subtítulos de secciones) ───────────────────── */
+function applyTextos(t) {
+  if (!t) return;
+  Object.keys(t).forEach(key => {
+    const val = t[key];
+    if (!val) return;
+    document.querySelectorAll(`[data-cms="${key}"]`).forEach(el => {
+      el.textContent = val;
+    });
+  });
 }
 
 /* ── Helpers ──────────────────────────────────────────────────────── */
