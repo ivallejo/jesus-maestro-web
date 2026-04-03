@@ -500,7 +500,7 @@ function salir() {
 //  CARGAR DATOS DESDE LOS JSON
 // ══════════════════════════════════════════════
 async function cargarTodo() {
-  var secciones = ['contacto','hero','nosotros','faq','testimonios','documentos','galeria'];
+  var secciones = ['contacto','hero','nosotros','faq','testimonios','documentos','galeria','programas'];
   await Promise.all(secciones.map(async function(s) {
     var r = await fetch('/content/' + s + '.json?t=' + Date.now());
     datos[s] = await r.json();
