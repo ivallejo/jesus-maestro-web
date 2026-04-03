@@ -1,0 +1,52 @@
+{
+  "lista": [
+    {
+      "nombre": "Aula Iniciación",
+      "descripcion": "Primeros pasos en la socialización, el juego simbólico y el descubrimiento del mundo a través de los sentidos.",
+      "imagen": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=600&q=80",
+      "color": "orange",
+      "info1_valor": "3 años",
+      "info1_label": "edad",
+      "info2_valor": "5 días",
+      "info2_label": "por semana",
+      "info3_valor": "5h 15m",
+      "info3_label": "por día"
+    },
+    {
+      "nombre": "Aula Exploración",
+      "descripcion": "Desarrollo del lenguaje oral, pensamiento lógico, creatividad artística y habilidades sociales fundamentales.",
+      "imagen": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80",
+      "color": "pink",
+      "info1_valor": "4 años",
+      "info1_label": "edad",
+      "info2_valor": "5 días",
+      "info2_label": "por semana",
+      "info3_valor": "5h 15m",
+      "info3_label": "por día"
+    },
+    {
+      "nombre": "Aula Preparación",
+      "descripcion": "Aprestamiento para primaria, lectoescritura inicial, matemáticas básicas y autonomía personal consolidada.",
+      "imagen": "https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=600&q=80",
+      "color": "teal",
+      "info1_valor": "5 años",
+      "info1_label": "edad",
+      "info2_valor": "5 días",
+      "info2_label": "por semana",
+      "info3_valor": "5h 15m",
+      "info3_label": "por día"
+    },
+    {
+      "nombre": "Programa Plus",
+      "descripcion": "Talleres de inglés, computación, danza y arte para enriquecer la experiencia educativa de todos los niños.",
+      "imagen": "https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&q=80",
+      "color": "blue",
+      "info1_valor": "3–5",
+      "info1_label": "años",
+      "info2_valor": "Flexible",
+      "info2_label": "horario",
+      "info3_valor": "Talleres",
+      "info3_label": "variados"
+    }
+  ]
+}

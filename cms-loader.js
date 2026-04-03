@@ -4,7 +4,7 @@
  * Si los archivos no están disponibles, el HTML estático sigue funcionando.
  */
 (async function initCMS() {
-  const sections = ['contacto','hero','nosotros','testimonios','documentos','faq','galeria'];
+  const sections = ['contacto','hero','nosotros','testimonios','documentos','faq','galeria','programas'];
   const data = {};
 
   await Promise.all(sections.map(async (s) => {
@@ -21,6 +21,7 @@
   applyDocumentos(data.documentos);
   applyFaq(data.faq);
   applyGaleria(data.galeria);
+  applyProgramas(data.programas);
 })();
 
 /* ── Contacto ─────────────────────────────────────────────────────── */
@@ -118,6 +119,30 @@ function applyGaleria(g) {
     <div class="gallery-item ${item.clase || ''} reveal" style="transition-delay:${0.1*i}s">
       <img src="${esc(item.src)}" alt="${esc(item.alt)}" loading="lazy" />
       <span class="gallery-label">${esc(item.label)}</span>
+    </div>`).join('');
+}
+
+/* ── Programas ────────────────────────────────────────────────────── */
+function applyProgramas(p) {
+  if (!p?.lista?.length) return;
+  const track = document.querySelector('[data-cms="programas-track"]');
+  if (!track) return;
+  track.innerHTML = p.lista.map(item => `
+    <div class="program-card" data-color="${esc(item.color)}">
+      <div class="program-thumb">
+        <img src="${esc(item.imagen)}" alt="${esc(item.nombre)}" loading="lazy" />
+      </div>
+      <div class="program-body">
+        <div class="program-name">${esc(item.nombre)}</div>
+        <p class="program-desc">${esc(item.descripcion)}</p>
+        <div class="program-info-bar">
+          <div class="program-info-item"><span class="info-val">${esc(item.info1_valor)}</span><span class="info-label">${esc(item.info1_label)}</span></div>
+          <div class="info-sep"></div>
+          <div class="program-info-item"><span class="info-val">${esc(item.info2_valor)}</span><span class="info-label">${esc(item.info2_label)}</span></div>
+          <div class="info-sep"></div>
+          <div class="program-info-item"><span class="info-val">${esc(item.info3_valor)}</span><span class="info-label">${esc(item.info3_label)}</span></div>
+        </div>
+      </div>
     </div>`).join('');
 }
 

@@ -260,6 +260,7 @@
       <button class="tab-btn" onclick="mostrarSeccion('testimonios', this)">💬 Testimonios</button>
       <button class="tab-btn" onclick="mostrarSeccion('documentos', this)">📄 Documentos</button>
       <button class="tab-btn" onclick="mostrarSeccion('galeria', this)">🖼️ Galería</button>
+      <button class="tab-btn" onclick="mostrarSeccion('programas', this)">📚 Programas</button>
     </div>
 
     <!-- ── CONTACTO ── -->
@@ -425,6 +426,25 @@
       </div>
     </div>
 
+    <!-- ── PROGRAMAS ── -->
+    <div class="seccion" id="sec-programas">
+      <div class="seccion-card">
+        <div class="seccion-header">
+          <div class="seccion-icon purple"><i class="fas fa-book-open"></i></div>
+          <div>
+            <div class="seccion-title">Programas educativos</div>
+            <div class="seccion-sub">Los aulas y programas que ofrece el colegio (carousel del sitio)</div>
+          </div>
+        </div>
+        <div class="lista-wrap" id="programas-wrap"></div>
+        <button class="btn-agregar" onclick="agregarPrograma()"><i class="fas fa-plus"></i> Agregar programa</button>
+        <div class="guardar-wrap">
+          <button class="btn-guardar" onclick="guardar('programas')"><i class="fas fa-save"></i> Guardar cambios</button>
+          <a class="btn-ver-sitio" href="https://iei-jesus-maestro.netlify.app#programas" target="_blank"><i class="fas fa-eye"></i> Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /panel-body -->
 </div><!-- /panel-screen -->
 
@@ -517,6 +537,9 @@ function renderizarTodo() {
 
   // Galería
   renderGaleria((datos.galeria || {}).lista || []);
+
+  // Programas
+  renderProgramas((datos.programas || {}).lista || []);
 }
 
 function setVal(id, val) {
@@ -664,6 +687,79 @@ function agregarDocumento() {
   renumerarItems('docs-wrap');
 }
 
+// ── Programas ──
+function renderProgramas(lista) {
+  var wrap = document.getElementById('programas-wrap');
+  wrap.innerHTML = '';
+  lista.forEach(function(p, i) { wrap.appendChild(crearProgramaItem(p, i)); });
+}
+function crearProgramaItem(p, i) {
+  var colores = ['orange','pink','teal','blue','purple','green'];
+  var div = document.createElement('div');
+  div.className = 'lista-item';
+  div.innerHTML = `
+    <div class="lista-item-header">
+      <div class="lista-num">${i+1}</div>
+      <button class="btn-eliminar" onclick="eliminarItem('programas-wrap', this)">✕ Eliminar</button>
+    </div>
+    <div class="campo">
+      <label>📚 Nombre del programa <span class="hint">Ej: Aula Iniciación</span></label>
+      <input type="text" class="p-nombre" value="${esc(p.nombre)}" placeholder="Aula Iniciación" />
+    </div>
+    <div class="campo">
+      <label>📝 Descripción</label>
+      <textarea class="p-descripcion" rows="2" placeholder="Describe brevemente este programa...">${esc(p.descripcion)}</textarea>
+    </div>
+    <div class="campo">
+      <label>🖼️ Enlace de la foto <span class="hint">URL de la imagen de portada</span></label>
+      <input type="url" class="p-imagen" value="${esc(p.imagen)}" placeholder="https://..." />
+    </div>
+    <div class="campo">
+      <label>🎨 Color de la tarjeta</label>
+      <select class="p-color">
+        ${colores.map(function(c){ return `<option value="${c}" ${p.color===c?'selected':''}>${c}</option>`; }).join('')}
+      </select>
+    </div>
+    <div style="margin-top:8px; font-weight:700; font-size:0.85rem; color:#484848; margin-bottom:8px;">📊 Datos que aparecen en la barra de colores</div>
+    <div class="campo-row">
+      <div class="campo">
+        <label>Dato 1 — Valor <span class="hint">Ej: 3 años</span></label>
+        <input type="text" class="p-i1v" value="${esc(p.info1_valor)}" placeholder="3 años" />
+      </div>
+      <div class="campo">
+        <label>Dato 1 — Etiqueta <span class="hint">Ej: edad</span></label>
+        <input type="text" class="p-i1l" value="${esc(p.info1_label)}" placeholder="edad" />
+      </div>
+    </div>
+    <div class="campo-row">
+      <div class="campo">
+        <label>Dato 2 — Valor</label>
+        <input type="text" class="p-i2v" value="${esc(p.info2_valor)}" placeholder="5 días" />
+      </div>
+      <div class="campo">
+        <label>Dato 2 — Etiqueta</label>
+        <input type="text" class="p-i2l" value="${esc(p.info2_label)}" placeholder="por semana" />
+      </div>
+    </div>
+    <div class="campo-row">
+      <div class="campo">
+        <label>Dato 3 — Valor</label>
+        <input type="text" class="p-i3v" value="${esc(p.info3_valor)}" placeholder="5h 15m" />
+      </div>
+      <div class="campo">
+        <label>Dato 3 — Etiqueta</label>
+        <input type="text" class="p-i3l" value="${esc(p.info3_label)}" placeholder="por día" />
+      </div>
+    </div>`;
+  return div;
+}
+function agregarPrograma() {
+  var wrap = document.getElementById('programas-wrap');
+  var n = wrap.children.length;
+  wrap.appendChild(crearProgramaItem({nombre:'',descripcion:'',imagen:'',color:'teal',info1_valor:'',info1_label:'',info2_valor:'',info2_label:'',info3_valor:'',info3_label:''}, n));
+  renumerarItems('programas-wrap');
+}
+
 // ── Galería ──
 function renderGaleria(lista) {
   var wrap = document.getElementById('galeria-wrap');
@@ -784,6 +880,23 @@ function recolectar(seccion) {
         label: item.querySelector('.g-label').value.trim(),
         alt:   item.querySelector('.g-alt').value.trim(),
         clase: i === 0 ? 'span2' : 'normal',
+      };
+    });
+    return { lista };
+  }
+  if (seccion === 'programas') {
+    var lista = [...document.querySelectorAll('#programas-wrap .lista-item')].map(function(item){
+      return {
+        nombre:       item.querySelector('.p-nombre').value.trim(),
+        descripcion:  item.querySelector('.p-descripcion').value.trim(),
+        imagen:       item.querySelector('.p-imagen').value.trim(),
+        color:        item.querySelector('.p-color').value,
+        info1_valor:  item.querySelector('.p-i1v').value.trim(),
+        info1_label:  item.querySelector('.p-i1l').value.trim(),
+        info2_valor:  item.querySelector('.p-i2v').value.trim(),
+        info2_label:  item.querySelector('.p-i2l').value.trim(),
+        info3_valor:  item.querySelector('.p-i3v').value.trim(),
+        info3_label:  item.querySelector('.p-i3l').value.trim(),
       };
     });
     return { lista };

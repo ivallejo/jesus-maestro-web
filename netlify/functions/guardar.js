@@ -23,7 +23,7 @@ exports.handler = async (event) => {
   }
 
   // Secciones válidas
-  const secciones = ['contacto','hero','nosotros','faq','testimonios','documentos','galeria'];
+  const secciones = ['contacto','hero','nosotros','faq','testimonios','documentos','galeria','programas'];
   if (!secciones.includes(seccion)) {
     return error(400, 'Sección no válida');
   }
