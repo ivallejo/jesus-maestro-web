@@ -316,6 +316,22 @@
           </div>
         </div>
         <div class="campo">
+          <label>🏷️ Etiqueta pequeña <span class="hint">El texto verde pequeño arriba del título</span></label>
+          <input type="text" id="h-tag" placeholder="Ej: Institución Educativa Inicial · Chorrillos" />
+        </div>
+        <div class="campo">
+          <label>📌 Título — primera parte <span class="hint">Ej: Donde la</span></label>
+          <input type="text" id="h-titulo-antes" placeholder="Donde la" />
+        </div>
+        <div class="campo">
+          <label>✨ Título — palabra destacada <span class="hint">La palabra en color teal</span></label>
+          <input type="text" id="h-titulo-palabra" placeholder="infancia" />
+        </div>
+        <div class="campo">
+          <label>📌 Título — parte final</label>
+          <input type="text" id="h-titulo-despues" placeholder="florece con amor y aprendizaje" />
+        </div>
+        <div class="campo">
           <label>📝 Descripción principal</label>
           <textarea id="h-descripcion" rows="4" placeholder="Ej: En IEI Jesús Maestro formamos niños y niñas felices..."></textarea>
         </div>
@@ -645,7 +661,11 @@ function renderizarTodo() {
 
   // Hero
   var h = datos.hero || {};
-  setVal('h-descripcion', h.descripcion);
+  setVal('h-tag',           h.tag);
+  setVal('h-titulo-antes',  h.titulo_antes);
+  setVal('h-titulo-palabra',h.titulo_palabra);
+  setVal('h-titulo-despues',h.titulo_despues);
+  setVal('h-descripcion',   h.descripcion);
   renderStats(h.stats || []);
 
   // Nosotros
@@ -974,7 +994,14 @@ function recolectar(seccion) {
         label: item.querySelector('.stat-label').value.trim(),
       };
     });
-    return { descripcion: document.getElementById('h-descripcion').value.trim(), stats };
+    return {
+      tag:            document.getElementById('h-tag').value.trim(),
+      titulo_antes:   document.getElementById('h-titulo-antes').value.trim(),
+      titulo_palabra: document.getElementById('h-titulo-palabra').value.trim(),
+      titulo_despues: document.getElementById('h-titulo-despues').value.trim(),
+      descripcion:    document.getElementById('h-descripcion').value.trim(),
+      stats
+    };
   }
   if (seccion === 'nosotros') {
     return { descripcion: document.getElementById('n-descripcion').value.trim() };

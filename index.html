@@ -161,8 +161,9 @@
     .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,187,174,0.10); color: var(--teal); font-weight: 600; font-size: 0.85rem; padding: 8px 18px; border-radius: 50px; margin-bottom: 24px; border: 1px solid rgba(0,187,174,0.2); }
     .hero-tag::before { content: none; }
     .hero h1 { font-family: 'Fredoka', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; color: var(--navy); line-height: 1.15; }
-    .hero h1 span { color: var(--teal); position: relative; display: inline-block; }
-    .hero h1 span::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 100%; height: 6px; background: rgba(0,187,174,0.18); z-index: -1; border-radius: 4px; }
+    .hero h1 span { color: inherit; }
+    .hero h1 span[data-cms="hero-titulo-palabra"] { color: var(--teal); position: relative; display: inline-block; }
+    .hero h1 span[data-cms="hero-titulo-palabra"]::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 100%; height: 6px; background: rgba(0,187,174,0.18); z-index: -1; border-radius: 4px; }
     .hero-desc { font-size: 1.1rem; color: var(--gray); margin: 20px 0 36px; line-height: 1.8; max-width: 520px; }
     .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
     .hero-stats { display: flex; gap: 32px; margin-top: 48px; }
@@ -568,8 +569,8 @@
   <section class="hero" id="inicio">
     <div class="container">
       <div class="hero-content">
-        <div class="hero-tag">Institución Educativa Inicial · Chorrillos</div>
-        <h1>Donde la <span>infancia</span> florece con amor y aprendizaje</h1>
+        <div class="hero-tag" data-cms="hero-tag">Institución Educativa Inicial · Chorrillos</div>
+        <h1><span data-cms="hero-titulo-antes">Donde la</span> <span data-cms="hero-titulo-palabra">infancia</span> <span data-cms="hero-titulo-despues">florece con amor y aprendizaje</span></h1>
         <p class="hero-desc" data-cms="hero-desc">En IEI Jesús Maestro formamos niños y niñas felices, curiosos y seguros de sí mismos, desde una visión humanista cristiana llena de valores, creatividad y juego.</p>
         <div class="hero-actions">
           <a href="#admision" class="btn btn-primary"><i class="fas fa-star"></i> <span>Inscríbete ahora</span></a>

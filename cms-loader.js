@@ -49,7 +49,11 @@ function applyContacto(c) {
 /* ── Hero ─────────────────────────────────────────────────────────── */
 function applyHero(h) {
   if (!h) return;
-  if (h.descripcion) setAll('[data-cms="hero-desc"]', h.descripcion);
+  if (h.tag)            setAll('[data-cms="hero-tag"]', h.tag);
+  if (h.titulo_antes)   setAll('[data-cms="hero-titulo-antes"]', h.titulo_antes);
+  if (h.titulo_palabra) setAll('[data-cms="hero-titulo-palabra"]', h.titulo_palabra);
+  if (h.titulo_despues) setAll('[data-cms="hero-titulo-despues"]', h.titulo_despues);
+  if (h.descripcion)    setAll('[data-cms="hero-desc"]', h.descripcion);
   if (h.stats) {
     const el = document.querySelector('[data-cms="hero-stats"]');
     if (el) {
